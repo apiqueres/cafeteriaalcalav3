@@ -24,7 +24,7 @@
 (function(){ try{ var h = document.documentElement, t = +sessionStorage.getItem('llegada'); sessionStorage.removeItem('llegada');
   if(t && Date.now() - t < 4000) h.className += ' llegada';
   else if(sessionStorage.getItem('telon') === '1' || location.hash || matchMedia('(prefers-reduced-motion: reduce)').matches) h.className += ' sin-telon'; }catch(e){} })();</script>
-<link rel="stylesheet" href="css/base.css?v=13">
+<link rel="stylesheet" href="css/base.css?v=14">
 <link rel="stylesheet" href="css/portada.css?v=10">
 <link rel="preload" href="media/logo.svg" as="image">
 <script type="application/ld+json">
@@ -291,7 +291,7 @@
 window.CLIPS = [1,2,3,4,5,6,7,8,9].map(function(i){ return { video: 'media/reels/reel' + i + '.mp4', poster: 'media/reels/reel' + i + '.webp', destino: 'https://instagram.com/cafeteriaalcala' }; });
 </script>
 <script src="lib/lenis.min.js" defer></script>
-<script src="js/base.js?v=8" defer></script>
+<script src="js/base.js?v=9" defer></script>
 <script src="js/portada.js?v=6" defer></script>
 </body>
 </html>

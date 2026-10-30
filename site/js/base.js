@@ -236,15 +236,18 @@
      Sólo la primera vez en la sesión (el guion de la cabecera pone html.sin-telon o html.llegada si no toca).
      La animación del logo dura ~2,4 s; después las cinco persianas salen de lado. Se salta con scroll, tecla o clic. */
   var telon = document.getElementById('telon');
-  if(telon && (raiz.classList.contains('llegada') || raiz.classList.contains('sin-telon'))){ telon.classList.add('quitado'); try{ sessionStorage.setItem('telon', '1'); }catch(e){} }
-  else if(telon){
+  /* el logo del hero aterriza (CSS: .hero--entra) cuando el telón se va, o al momento si no hay telón */
+  var aterrizar = function(){ var h = document.querySelector('.hero'); if(h) h.classList.add('hero--entra'); };
+  if(!telon) aterrizar();
+  else if(raiz.classList.contains('llegada') || raiz.classList.contains('sin-telon')){ telon.classList.add('quitado'); try{ sessionStorage.setItem('telon', '1'); }catch(e){} aterrizar(); }
+  else {
     var primera = telon.querySelector('.telon__persiana');
     if(primera) for(var np = 1; np < 5; np++){ var copia = primera.cloneNode(true); copia.style.setProperty('--n', np); telon.appendChild(copia); }
     var t0 = performance.now(), cerrado = false;
     var abrirTelon = function(){
       if(cerrado) return; cerrado = true;
       try{ sessionStorage.setItem('telon', '1'); }catch(e){}
-      telon.classList.add('fuera'); setTimeout(function(){ telon.classList.add('quitado'); }, 1100);
+      telon.classList.add('fuera'); aterrizar(); setTimeout(function(){ telon.classList.add('quitado'); }, 1100);
     };
     void telon.offsetWidth; telon.classList.add('telon--va');          // arrancan las cinco a la vez
     var listo = document.readyState === 'complete';

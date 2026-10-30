@@ -5,6 +5,12 @@
 (function(){
   var REDUCIR = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var lim = function(v){ return v < 0 ? 0 : v > 1 ? 1 : v; };
+  var raiz = document.documentElement;
+  /* transiciones por bandas (el CSS está en base.css): dentro de la página con startViewTransition,
+     entre páginas con @view-transition (el navegador la hace solo si sabe; si no, respaldo con .bandas) */
+  var VT = !REDUCIR && typeof document.startViewTransition === 'function';
+  var VT_PAGINAS = VT && ('onpagereveal' in window);
+  var cerrarMenu = null;
   var yr = document.getElementById('yr'); if(yr) yr.textContent = new Date().getFullYear();
 
   /* ---------- titulares: cada palabra en su ventanita ---------- */
@@ -79,13 +85,54 @@
   }
   window.__sitioDe = sitioDe;
 
+  /* enlaces de sección: con view transitions, salto inmediato barrido por bandas; si no, scroll suave */
   document.addEventListener('click', function(e){
     var a = e.target.closest && e.target.closest('a[href^="#"]'); if(!a) return;
     var id = a.getAttribute('href').slice(1); var el = id ? document.getElementById(id) : null; if(!el) return;
     e.preventDefault(); var y = sitioDe(el);
+    if(VT){
+      var tr = document.startViewTransition(function(){
+        if(cerrarMenu) cerrarMenu(true);
+        if(lenis) lenis.scrollTo(y, { immediate: true, force: true });
+        if(Math.abs(scrollY - y) > 2) scrollTo(0, y);
+        try{ history.pushState(null, '', id === 'inicio' ? location.pathname + location.search : '#' + id); }catch(err){}
+        actualizar();
+      });
+      /* si otra transición o una navegación la interrumpe, el navegador la salta: no es un error */
+      ['ready', 'finished', 'updateCallbackDone'].forEach(function(k){ if(tr && tr[k] && tr[k].catch) tr[k].catch(function(){}); });
+      return;
+    }
+    if(cerrarMenu) cerrarMenu(false);
     if(lenis){ lenis.scrollTo(y, { duration: 1.3 }); setTimeout(function(){ if(Math.abs(scrollY - y) > 6 && !lenis.isScrolling) scrollTo(0, y); }, 1900); }
     else scrollTo({ top: y, behavior: REDUCIR ? 'auto' : 'smooth' });
   });
+
+  /* enlaces a otra página del sitio: se apunta la salida (la página de llegada no enseña el telón) y, si el
+     navegador no sabe hacer la transición entre páginas, se tapa con bandas burdeos antes de cambiar */
+  document.addEventListener('click', function(e){
+    if(e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest('a[href]'); if(!a) return;
+    var h = a.getAttribute('href') || '';
+    if(h.charAt(0) === '#' || a.target === '_blank' || a.hasAttribute('download') || a.origin !== location.origin) return;
+    if(a.pathname === location.pathname && a.search === location.search) return;
+    try{ sessionStorage.setItem('llegada', String(Date.now())); }catch(err){}
+    if(REDUCIR || VT_PAGINAS) return;
+    e.preventDefault();
+    var tapa = document.createElement('div'); tapa.className = 'bandas'; tapa.setAttribute('aria-hidden', 'true');
+    for(var i = 0; i < 5; i++){ var b = document.createElement('i'); b.style.setProperty('--i', i); tapa.appendChild(b); }
+    document.body.appendChild(tapa);
+    try{ sessionStorage.setItem('llegada-bandas', '1'); }catch(err){}
+    setTimeout(function(){ location.href = a.href; }, 1000);
+  });
+  /* llegada con el respaldo: la página se destapa con la misma máscara de bandas sobre body */
+  (function(){
+    var con = false; try{ con = sessionStorage.getItem('llegada-bandas') === '1'; sessionStorage.removeItem('llegada-bandas'); }catch(err){}
+    if(!con || REDUCIR) return;
+    raiz.classList.add('llegada--bandas');
+    var quitar = function(){ raiz.classList.remove('llegada--bandas'); };
+    document.body.addEventListener('animationend', function(e){ if(e.animationName === 'banda4') quitar(); });
+    setTimeout(quitar, 1500);
+  })();
 
   /* snap suave: sólo en escritorio, donde las láminas se apilan */
   var apilado = matchMedia('(min-width:900px) and (min-height:600px)');
@@ -146,7 +193,18 @@
     }
     mb.addEventListener('click', function(){ abrir(true); });
     if(mc) mc.addEventListener('click', function(){ abrir(false); });
-    menu.addEventListener('click', function(e){ if(e.target.tagName === 'A') abrir(false); });
+    /* los enlaces de sección los cierra el manejador de arriba (al instante dentro de la transición); los de otra
+       página del sitio dejan el menú abierto para que la transición por bandas entre encima de él */
+    menu.addEventListener('click', function(e){
+      var a = e.target.closest && e.target.closest('a'); if(!a) return;
+      var h = a.getAttribute('href') || ''; if(h.charAt(0) === '#') return;
+      if(a.target === '_blank' || a.origin !== location.origin) abrir(false);
+    });
+    cerrarMenu = function(inmediato){
+      if(!menu.classList.contains('abierto')) return;
+      if(!inmediato){ abrir(false); return; }
+      menu.classList.add('sin-transicion'); abrir(false); void menu.offsetWidth; menu.classList.remove('sin-transicion');
+    };
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && menu.classList.contains('abierto')) abrir(false); });
   }
 
@@ -163,7 +221,8 @@
      La animación del logo dura ~2,4 s y se enseña entera sólo la primera vez en la sesión;
      las siguientes veces el telón se abre al momento. */
   var telon = document.getElementById('telon');
-  if(telon){
+  if(telon && raiz.classList.contains('llegada')){ telon.classList.add('quitado'); try{ sessionStorage.setItem('telon', '1'); }catch(e){} }
+  else if(telon){
     var visto = false; try{ visto = sessionStorage.getItem('telon') === '1'; }catch(e){}
     var t0 = performance.now(), cerrado = false;
     var abrirTelon = function(){

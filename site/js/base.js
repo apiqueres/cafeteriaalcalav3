@@ -232,26 +232,26 @@
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape') abrir(false); });
   });
 
-  /* ---------- telón de entrada ----------
-     La animación del logo dura ~2,4 s y se enseña entera sólo la primera vez en la sesión;
-     las siguientes veces el telón se abre al momento. */
+  /* ---------- telón de entrada: persianas con el logo (CSS en base.css) ----------
+     Sólo la primera vez en la sesión (el guion de la cabecera pone html.sin-telon o html.llegada si no toca).
+     La animación del logo dura ~2,4 s; después las cinco persianas salen de lado. Se salta con scroll, tecla o clic. */
   var telon = document.getElementById('telon');
-  if(telon && raiz.classList.contains('llegada')){ telon.classList.add('quitado'); try{ sessionStorage.setItem('telon', '1'); }catch(e){} }
+  if(telon && (raiz.classList.contains('llegada') || raiz.classList.contains('sin-telon'))){ telon.classList.add('quitado'); try{ sessionStorage.setItem('telon', '1'); }catch(e){} }
   else if(telon){
-    var visto = false; try{ visto = sessionStorage.getItem('telon') === '1'; }catch(e){}
+    var primera = telon.querySelector('.telon__persiana');
+    if(primera) for(var np = 1; np < 5; np++){ var copia = primera.cloneNode(true); copia.style.setProperty('--n', np); telon.appendChild(copia); }
     var t0 = performance.now(), cerrado = false;
     var abrirTelon = function(){
       if(cerrado) return; cerrado = true;
       try{ sessionStorage.setItem('telon', '1'); }catch(e){}
       telon.classList.add('fuera'); setTimeout(function(){ telon.classList.add('quitado'); }, 1100);
     };
-    if(REDUCIR || visto){ telon.classList.add('telon--rapido'); setTimeout(abrirTelon, 250); }
-    else {
-      var listo = document.readyState === 'complete';
-      if(!listo) addEventListener('load', function(){ listo = true; });
-      var espera = setInterval(function(){ if(performance.now() - t0 >= 2450 && listo){ clearInterval(espera); abrirTelon(); } }, 50);
-      setTimeout(abrirTelon, 5000);                                     // tope por si la carga se alarga
-    }
+    void telon.offsetWidth; telon.classList.add('telon--va');          // arrancan las cinco a la vez
+    var listo = document.readyState === 'complete';
+    if(!listo) addEventListener('load', function(){ listo = true; });
+    var espera = setInterval(function(){ if(performance.now() - t0 >= 2450 && listo){ clearInterval(espera); abrirTelon(); } }, 50);
+    setTimeout(abrirTelon, 5000);                                       // tope por si la carga se alarga
+    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function(ev){ addEventListener(ev, abrirTelon, { once: true, passive: true }); });
   }
 
   /* ---------- cintas: se mueven solas y más deprisa con el scroll ---------- */

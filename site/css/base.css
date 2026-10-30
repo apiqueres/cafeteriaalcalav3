@@ -68,17 +68,19 @@ ul{ margin:0; padding:0; list-style:none }
 .grande{ font-size:clamp(1.1rem,1rem + .55vw,1.4rem); line-height:1.45; font-weight:500 }
 p b{ font-weight:700 }
 .raya{ position:relative; padding-bottom:.6rem; margin-bottom:1rem }
-.raya::after{ content:""; position:absolute; left:0; bottom:0; width:2.2rem; height:2px; background:var(--oro) }
+.raya::after{ content:""; position:absolute; left:0; bottom:0; width:2.2rem; height:2px; background:var(--oro); transform:scaleX(0); transform-origin:0 50%; transition:transform 1.15s var(--lento) }
+.in .raya::after, .raya.in::after{ transform:scaleX(1) }
 .h3{ font-family:var(--ff-ui); font-weight:500; text-transform:uppercase; letter-spacing:.14em; font-size:.85rem; opacity:.85 }
 .oro{ color:var(--oro) }
 
-/* titulares palabra a palabra (el JS envuelve cada palabra en .pal > span) */
-.pal{ display:inline-block; overflow:hidden; vertical-align:bottom; padding-bottom:.08em; margin-bottom:-.08em }
-.pal>span{ display:inline-block; transform:translateY(110%); transition:transform .9s var(--lento); transition-delay:calc(var(--i,0)*55ms) }
+/* titulares: el JS envuelve cada palabra en .pal > span (la ventanita) y pone en --l el número de línea
+   en que cae la palabra; cada línea sube entera desde 105 % en .95s, 95 ms después de la anterior */
+.pal{ display:inline-block; overflow:clip; vertical-align:bottom; padding-bottom:.08em; margin-bottom:-.08em }
+.pal>span{ display:inline-block; transform:translateY(105%); transition:transform .95s var(--lento); transition-delay:calc(var(--l,0)*95ms) }
 .in .pal>span, .titular.in .pal>span{ transform:none }
 
-/* entradas: .rv aparece al asomar en pantalla */
-.rv{ opacity:0; transform:translateY(22px); transition:opacity .8s var(--suave), transform .9s var(--lento); transition-delay:var(--d,0s) }
+/* entradas: .rv (párrafos, botones, bloques) aparece al asomar en pantalla: opacidad en .65s y 24 px de subida en .95s */
+.rv{ opacity:0; transform:translateY(24px); transition:opacity .65s var(--suave), transform .95s var(--lento); transition-delay:var(--d,0s) }
 .rv.in, .in>.rv, .in .rv{ opacity:1; transform:none }
 
 /* ====================== contenedor ====================== */
@@ -233,7 +235,9 @@ p b{ font-weight:700 }
 .cuerpo{ display:grid; gap:var(--hueco); align-items:center }
 
 /* foto con las esquinas del logo + parallax interior según --entra */
-.foto{ position:relative; overflow:hidden; border-radius:var(--r-logo); background:var(--hueso-3); box-shadow:var(--sombra-carta) }
+.foto{ position:relative; overflow:hidden; border-radius:var(--r-logo); background:var(--hueso-3); box-shadow:var(--sombra-carta);
+  clip-path:inset(12% 0 0); transition:clip-path 1.1s var(--lento); transition-delay:var(--d,0s) }   /* entra destapándose por arriba */
+.foto.in{ clip-path:inset(0) }
 .foto img{ width:100%; height:100%; object-fit:cover; transform:translateY(calc((var(--entra,1) - 1) * -6%)) scale(1.08); transition:transform .1s linear }
 .foto--arco{ border-radius:999px 999px var(--r-logo-s) var(--r-logo-s) }
 .foto--arco{ border-radius:50% 50% 16px 0 / 40% 40% 16px 0 }
@@ -311,7 +315,7 @@ p b{ font-weight:700 }
 /* ====================== reducir movimiento ====================== */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important }
-  .pal>span{ transform:none } .rv{ opacity:1; transform:none }
+  .pal>span{ transform:none } .rv{ opacity:1; transform:none } .foto, .cat{ clip-path:none } .raya::after{ transform:none }
   .lamina{ transform:none }
   .hero__scroll{ display:none }
 }

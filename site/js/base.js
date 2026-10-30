@@ -140,7 +140,7 @@
     var espera = null, encajando = false, dir = 1;
     function puntos(){ var p = [0]; laminas.forEach(function(l){ if(!l.classList.contains('lamina--libre')) p.push(sitioDe(l)); }); return p; }
     function encajar(){
-      if(!apilado.matches || encajando || lenis.isStopped || document.body.style.overflow === 'hidden') return;
+      if(!apilado.matches || encajando || lenis.isStopped || raiz.style.overflow === 'clip') return;
       var y = lenis.animatedScroll, P = puntos(), ultimo = P[P.length - 1];
       if(y >= ultimo - 2) return;
       for(var i = 0; i < P.length - 1; i++){
@@ -181,18 +181,34 @@
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(actualizar);
   setTimeout(actualizar, 60); setTimeout(actualizar, 600);
 
-  /* ---------- menú de móvil ---------- */
+  /* ---------- menú de móvil: <dialog> con persianas (CSS en base.css) ----------
+     Se abre con showModal (lo de detrás queda inerte), html con overflow:clip (clip y no hidden, para que los sticky
+     sigan atados a la pantalla) y Lenis parado. La clase .abierto lleva la coreografía; al cerrar se quita y el
+     diálogo se cierra de verdad cuando acaban las persianas (980 ms). */
   var menu = document.getElementById('menu'), mb = document.getElementById('menuBtn'), mc = document.getElementById('menuCerrar');
   if(menu && mb){
-    [].slice.call(menu.querySelectorAll('a')).forEach(function(a, i){ a.style.setProperty('--i', i); });
-    function abrir(v){
-      menu.classList.toggle('abierto', v); mb.setAttribute('aria-expanded', v ? 'true' : 'false');
-      document.body.style.overflow = v ? 'hidden' : '';
-      if(lenis){ v ? lenis.stop() : lenis.start(); }
-      if(v && mc) mc.focus(); else if(!v) mb.focus();
+    var CIERRE_MS = 980, cerrando = null;
+    [].slice.call(menu.querySelectorAll(':scope > a, :scope > .idiomas-fila, :scope > .menu__redes')).forEach(function(el, i){ el.style.setProperty('--i', i); });
+    function mostrarDialogo(v){
+      if(v){ if(menu.open) return; if(menu.showModal) menu.showModal(); else menu.setAttribute('open', ''); }
+      else { if(!menu.open) return; if(menu.close) menu.close(); else menu.removeAttribute('open'); }
+    }
+    function abrir(v, inmediato){
+      clearTimeout(cerrando); mb.setAttribute('aria-expanded', v ? 'true' : 'false');
+      if(v){
+        mostrarDialogo(true); raiz.style.overflow = 'clip'; if(lenis) lenis.stop();
+        void menu.offsetWidth; menu.classList.add('abierto');
+        if(mc) mc.focus();
+        return;
+      }
+      menu.classList.remove('abierto');
+      var fin = function(){ mostrarDialogo(false); raiz.style.overflow = ''; if(lenis) lenis.start(); mb.focus(); };
+      if(inmediato) fin(); else cerrando = setTimeout(fin, CIERRE_MS);
     }
     mb.addEventListener('click', function(){ abrir(true); });
     if(mc) mc.addEventListener('click', function(){ abrir(false); });
+    menu.addEventListener('cancel', function(e){ e.preventDefault(); abrir(false); });   /* Escape: cierre con coreografía */
+    menu.addEventListener('close', function(){ clearTimeout(cerrando); menu.classList.remove('abierto'); raiz.style.overflow = ''; if(lenis) lenis.start(); mb.setAttribute('aria-expanded', 'false'); });
     /* los enlaces de sección los cierra el manejador de arriba (al instante dentro de la transición); los de otra
        página del sitio dejan el menú abierto para que la transición por bandas entre encima de él */
     menu.addEventListener('click', function(e){
@@ -201,11 +217,10 @@
       if(a.target === '_blank' || a.origin !== location.origin) abrir(false);
     });
     cerrarMenu = function(inmediato){
-      if(!menu.classList.contains('abierto')) return;
+      if(!menu.open) return;
       if(!inmediato){ abrir(false); return; }
-      menu.classList.add('sin-transicion'); abrir(false); void menu.offsetWidth; menu.classList.remove('sin-transicion');
+      menu.classList.add('sin-transicion'); abrir(false, true); void menu.offsetWidth; menu.classList.remove('sin-transicion');
     };
-    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && menu.classList.contains('abierto')) abrir(false); });
   }
 
   /* ---------- selector de idioma ---------- */

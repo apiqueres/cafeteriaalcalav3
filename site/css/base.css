@@ -146,21 +146,35 @@ p b{ font-weight:700 }
 .idiomas__lista a b{ font-family:var(--ff-ui); font-weight:500; letter-spacing:.08em; width:1.8rem; color:var(--burdeos) }
 .idiomas__lista a:hover, .idiomas__lista a[aria-current]{ background:var(--hueso-2) }
 
-/* ====================== menú de móvil ====================== */
+/* ====================== menú de móvil: persianas de foto ======================
+   <dialog> a pantalla completa (showModal: lo de detrás queda inerte). Al abrir entran cinco persianas (.735s, --telon,
+   65 ms entre ellas, alternando desde −102 % y 102 %), cada una con la misma foto desplazada −20dvh × banda, así que al
+   terminar componen una sola foto; a .73s suben los enlaces (20 px → 0, .8s, 65 ms entre ellos) y a 1.05s la foto se
+   desenfoca y oscurece para que ganen. Al cerrar, enlaces fuera en .18s y persianas en orden inverso en .6s: 980 ms
+   en total (referencia-onform.md 4.10). */
 .menu{
-  position:fixed; inset:0; z-index:200; background:var(--burdeos-2); color:var(--hueso);
-  display:flex; flex-direction:column; justify-content:center; gap:.2rem; padding:5rem var(--lado) 2.4rem;
-  clip-path:circle(0% at calc(100% - 42px) 36px); visibility:hidden; transition:clip-path .7s var(--telon), visibility .7s;
+  position:fixed; inset:0; z-index:200; width:100%; height:100%; max-width:none; max-height:none; margin:0; border:0;
+  background:transparent; color:var(--hueso); overflow:hidden;
+  flex-direction:column; justify-content:center; gap:.2rem; padding:5rem var(--lado) 2.4rem;
 }
-.menu.abierto{ clip-path:circle(150% at calc(100% - 42px) 36px); visibility:visible }
-.menu::before{ content:""; position:absolute; inset:0; background:url(../media/texturas/papel.webp) center/420px; opacity:.07; mix-blend-mode:screen; pointer-events:none }
-.menu__cerrar{ position:absolute; top:14px; right:calc(var(--lado) - 8px); width:44px; height:44px; font-size:1.5rem; color:var(--oro) }
-.menu>a{
-  font-family:var(--ff-ui); font-weight:500; text-transform:uppercase; font-size:clamp(2.4rem,9vw,3.6rem); line-height:1.1; letter-spacing:.02em;
-  opacity:0; transform:translateY(24px); transition:opacity .5s, transform .6s var(--lento); transition-delay:calc(.15s + var(--i,0)*60ms);
-}
-.menu.abierto>a{ opacity:1; transform:none }
-.menu.sin-transicion, .menu.sin-transicion>a{ transition:none !important }   /* cerrar al instante dentro de una transición por bandas */
+.menu[open]{ display:flex }
+.menu::backdrop{ background:transparent }
+.menu__persianas{ position:absolute; inset:0; background:var(--burdeos-2); transition:filter .3s, transform .3s }
+.menu__persianas i{ position:absolute; left:0; width:100%; top:calc(var(--n,0) * 20dvh); height:calc(20dvh + 1px); overflow:hidden;
+  transform:translateX(102%); transition:transform .6s var(--telon); transition-delay:calc(100ms + (4 - var(--n,0)) * 65ms) }
+.menu__persianas i:nth-child(odd){ transform:translateX(-102%) }
+.menu__persianas i::before{ content:""; position:absolute; left:0; top:calc(var(--n,0) * -20dvh); width:100%; height:100dvh; background:url(../media/fotos/paint-interior.webp) center/cover }
+.menu.abierto .menu__persianas i{ transform:none; transition-duration:.735s; transition-delay:calc(var(--n,0) * 65ms) }
+.menu.abierto .menu__persianas{ filter:blur(2.6px) brightness(.75); transform:scale(1.06); transition:filter .7s, transform .7s; transition-delay:1.05s }
+.menu__velo{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(74,15,29,.45), rgba(74,15,29,.72)); opacity:0; transition:opacity .3s }
+.menu.abierto .menu__velo{ opacity:1; transition:opacity .7s 1.05s }
+.menu__cerrar{ position:absolute; top:14px; right:calc(var(--lado) - 8px); width:44px; height:44px; font-size:1.5rem; color:var(--oro); opacity:0; transition:opacity .2s }
+.menu.abierto .menu__cerrar{ opacity:1; transition:opacity .5s .6s }
+.menu__cerrar:focus:not(:focus-visible){ outline:none }   /* el foco programático al abrir no pinta el contorno */
+.menu>a{ font-family:var(--ff-ui); font-weight:500; text-transform:uppercase; font-size:clamp(2.4rem,9vw,3.6rem); line-height:1.1; letter-spacing:.02em }
+.menu>a, .menu>.idiomas-fila, .menu>.menu__redes{ position:relative; opacity:0; transform:translateY(20px); transition:opacity .18s, transform .18s }
+.menu.abierto>a, .menu.abierto>.idiomas-fila, .menu.abierto>.menu__redes{ opacity:1; transform:none; transition:opacity .8s var(--suave), transform .8s var(--lento); transition-delay:calc(.73s + var(--i,0) * 65ms) }
+.menu.sin-transicion, .menu.sin-transicion *{ transition:none !important }   /* cerrar al instante dentro de una transición por bandas */
 .menu__carta{ color:var(--oro) }
 .menu__redes{ margin-top:1.6rem; display:flex; gap:1rem; font-family:var(--ff-cuerpo); font-size:1rem; text-transform:none; letter-spacing:0 }
 .menu__redes a{ opacity:.8 }
@@ -356,6 +370,7 @@ html.llegada--bandas{ background:var(--burdeos) }
   .pal>span{ transform:none } .rv{ opacity:1; transform:none } .foto, .cat{ clip-path:none } .raya::after{ transform:none }
   .lamina{ transform:none }
   .hero__scroll{ display:none }
+  .menu, .menu *{ transition-delay:0s !important }
 }
 
 /* ====================== tipografía de titulares: Fraunces Soft ======================

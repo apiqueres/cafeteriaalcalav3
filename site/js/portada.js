@@ -37,3 +37,24 @@
     }, { threshold: .15 }).observe(sec);
   } else vids.forEach(play);
 })();
+
+/* ---------- salida del hero por scroll: --hero-travel ----------
+   Respaldo para navegadores sin animation-timeline (el arco, y en el paso 2 las capas del hero).
+   0 cuando la página está arriba y 1 cuando se ha recorrido la altura del hero; se suaviza con
+   valor += (objetivo - valor) * (1 - exp(-dt/95)) y se escribe en <html> como --hero-travel. */
+(function(){
+  var hero = document.getElementById('inicio'); if(!hero) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(window.CSS && CSS.supports && CSS.supports('animation-timeline: view()')) return;
+  var raiz = document.documentElement, valor = 0, objetivo = 0, ultT = 0, activo = false;
+  function lim(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function medir(){ objetivo = lim(scrollY / Math.max(1, hero.offsetHeight)); if(!activo){ activo = true; ultT = performance.now(); requestAnimationFrame(paso); } }
+  function paso(t){
+    var dt = Math.min(100, t - ultT); ultT = t;
+    valor += (objetivo - valor) * (1 - Math.exp(-dt / 95));
+    if(Math.abs(objetivo - valor) < .0005){ valor = objetivo; activo = false; }
+    raiz.style.setProperty('--hero-travel', valor.toFixed(4));
+    if(activo) requestAnimationFrame(paso);
+  }
+  addEventListener('scroll', medir, { passive: true }); addEventListener('resize', medir); medir();
+})();

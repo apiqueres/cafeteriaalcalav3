@@ -46,7 +46,7 @@
   /* ---------- scroll suave ---------- */
   var lenis = null;
   if(window.Lenis && !REDUCIR){
-    try{ lenis = new Lenis({ lerp: .09 }); window._lenis = lenis; (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(0); }
+    try{ lenis = new Lenis({ lerp: .12 }); window._lenis = lenis; (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(0); }
     catch(e){ document.documentElement.style.scrollBehavior = 'smooth'; }
   } else document.documentElement.style.scrollBehavior = REDUCIR ? 'auto' : 'smooth';
 
@@ -138,7 +138,9 @@
   var apilado = matchMedia('(min-width:900px) and (min-height:600px)');
   if(lenis) (function(){
     var espera = null, encajando = false, dir = 1;
-    function puntos(){ var p = [0]; laminas.forEach(function(l){ if(!l.classList.contains('lamina--libre')) p.push(sitioDe(l)); }); return p; }
+    /* el encaje empieza en el hero de la frase: dentro de las escenas el scroll es libre (si no, al parar a mitad
+       de las escenas saltaba solo hasta la primera lámina o volvía arriba) */
+    function puntos(){ var e = document.querySelector('.escenas'); var p = [e ? e.offsetTop + e.offsetHeight : 0]; laminas.forEach(function(l){ if(!l.classList.contains('lamina--libre')) p.push(sitioDe(l)); }); return p; }   /* el hero de la frase empieza donde acaban las escenas (su offsetTop cambia al quedar pegado) */
     function encajar(){
       if(!apilado.matches || encajando || lenis.isStopped || raiz.style.overflow === 'clip') return;
       var y = lenis.animatedScroll, P = puntos(), ultimo = P[P.length - 1];

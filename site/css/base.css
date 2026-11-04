@@ -234,8 +234,9 @@ p b{ font-weight:700 }
 .hero--frase{ background:var(--burdeos) }
 .hero--frase::before{ content:""; position:absolute; inset:0; background:url(../media/texturas/azulejo.webp) center/420px; opacity:.14; mix-blend-mode:luminosity }
 .hero--frase .hero__velo{ background:linear-gradient(180deg, rgba(74,15,29,.35), rgba(74,15,29,0) 40%, rgba(74,15,29,.7)) }
-.hero--frase .hero__texto{ bottom:auto; top:50%; transform:translateY(-50%); gap:1.6rem }
-.hero--frase .hero__h1 b{ font-size:clamp(2rem,4.2vw,3.6rem); margin-top:.6rem; max-width:18ch }
+.hero--frase .hero__texto{ bottom:auto; top:50%; transform:translateY(-50%); gap:2rem }
+.hero--frase .hero__h1{ color:var(--oro-claro) }
+.hero--frase .hero__h1 b{ font-family:var(--ff-titulo); font-style:normal; font-weight:700; letter-spacing:-.01em; line-height:1.02; font-variation-settings:"SOFT" 100,"opsz" 72; color:var(--hueso); font-size:clamp(2.9rem,7.4vw,7.2rem); margin-top:1rem; max-width:13ch }
 .hero__h1{ font-family:var(--ff-ui); font-weight:500; text-transform:uppercase; letter-spacing:.2em; font-size:clamp(.82rem,1.2vw,1rem); opacity:.92 }
 .hero__h1 b{ display:block; font-family:var(--ff-detalle); font-style:italic; font-weight:400; text-transform:none; letter-spacing:0; font-size:clamp(1.5rem,2.6vw,2.4rem); color:var(--oro-claro); margin-top:.4rem }
 .hero__botones{ display:flex; flex-wrap:wrap; justify-content:center; gap:.7rem }

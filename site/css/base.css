@@ -226,18 +226,16 @@ p b{ font-weight:700 }
 .hero__logo{ position:absolute; z-index:3; left:50%; top:38%; width:clamp(200px,30vw,380px); transform:translate(-50%,-50%); filter:drop-shadow(0 20px 40px rgba(0,0,0,.45)) }
 .hero__logo img{ width:100%; height:auto }
 /* logo liso: el SVG como máscara, así el color se pone en CSS (oro o hueso) */
-.hero__logo--liso{ width:clamp(280px,40vw,520px); opacity:0 }
-/* aterrizaje: el logo viene desde detrás de quien mira, enorme y desenfocado, atraviesa la vista y encaja en su sitio.
-   Lo arranca .hero--entra, que base.js pone cuando el telón se va (o al momento si no hay telón). */
-.hero--entra .hero__logo--liso{ animation:logoAterriza 1.5s var(--lento) .25s both }
+.hero__logo--liso{ width:clamp(280px,40vw,520px) }
 .hero__logo--liso i{ display:block; width:100%; aspect-ratio:1; background:var(--oro);
   -webkit-mask:url(../media/logo.svg) center/contain no-repeat; mask:url(../media/logo.svg) center/contain no-repeat }
-@keyframes logoAterriza{
-  0%{ opacity:0; transform:translate(-50%,-50%) scale(9); filter:blur(16px) drop-shadow(0 20px 40px rgba(0,0,0,.45)) }
-  30%{ opacity:1 }
-  100%{ opacity:1; transform:translate(-50%,-50%) scale(1); filter:blur(0) drop-shadow(0 20px 40px rgba(0,0,0,.45)) }
-}
 .hero__texto{ position:absolute; z-index:4; left:0; right:0; bottom:clamp(2.2rem,6vh,4.5rem); text-align:center; display:grid; justify-items:center; gap:1.1rem; padding-inline:var(--lado) }
+/* hero de la frase: va después de las escenas, en burdeos con la textura de azulejo, y el texto centrado en la pantalla */
+.hero--frase{ background:var(--burdeos) }
+.hero--frase::before{ content:""; position:absolute; inset:0; background:url(../media/texturas/azulejo.webp) center/420px; opacity:.14; mix-blend-mode:luminosity }
+.hero--frase .hero__velo{ background:linear-gradient(180deg, rgba(74,15,29,.35), rgba(74,15,29,0) 40%, rgba(74,15,29,.7)) }
+.hero--frase .hero__texto{ bottom:auto; top:50%; transform:translateY(-50%); gap:1.6rem }
+.hero--frase .hero__h1 b{ font-size:clamp(2rem,4.2vw,3.6rem); margin-top:.6rem; max-width:18ch }
 .hero__h1{ font-family:var(--ff-ui); font-weight:500; text-transform:uppercase; letter-spacing:.2em; font-size:clamp(.82rem,1.2vw,1rem); opacity:.92 }
 .hero__h1 b{ display:block; font-family:var(--ff-detalle); font-style:italic; font-weight:400; text-transform:none; letter-spacing:0; font-size:clamp(1.5rem,2.6vw,2.4rem); color:var(--oro-claro); margin-top:.4rem }
 .hero__botones{ display:flex; flex-wrap:wrap; justify-content:center; gap:.7rem }
@@ -381,7 +379,6 @@ html.llegada--bandas{ background:var(--burdeos) }
   .pal>span{ transform:none } .rv{ opacity:1; transform:none } .foto, .cat{ clip-path:none } .raya::after{ transform:none }
   .lamina{ transform:none }
   .hero__scroll{ display:none }
-  .hero__logo--liso{ opacity:1; animation:none }
   .menu, .menu *{ transition-delay:0s !important }
 }
 

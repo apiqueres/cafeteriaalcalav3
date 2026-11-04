@@ -24,8 +24,8 @@
 (function(){ try{ var h = document.documentElement, t = +sessionStorage.getItem('llegada'); sessionStorage.removeItem('llegada');
   if(t && Date.now() - t < 4000) h.className += ' llegada';
   else if(sessionStorage.getItem('telon') === '1' || location.hash || matchMedia('(prefers-reduced-motion: reduce)').matches) h.className += ' sin-telon'; }catch(e){} })();</script>
-<link rel="stylesheet" href="css/base.css?v=14">
-<link rel="stylesheet" href="css/portada.css?v=10">
+<link rel="stylesheet" href="css/base.css?v=15">
+<link rel="stylesheet" href="css/portada.css?v=11">
 <link rel="preload" href="media/logo.svg" as="image">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -82,18 +82,46 @@
   </div>
 </header>
 
-<!-- hero -->
-<section class="hero" id="inicio">
-  <div class="hero__fondo" aria-hidden="true">
-    <picture>
-      <source media="(max-width:640px)" srcset="media/fotos/hero-tiles-movil.webp">
-      <img src="media/fotos/hero-tiles.webp" alt="" width="1920" height="823" fetchpriority="high">
+<!-- escenas: al entrar, sólo el logo en el local (azulejos burdeos); al bajar, el logo aparece en otros rincones y
+     productos de la cafetería, siempre centrado. Siete fotos generadas (originales en imagenes/escenas-logo); la
+     sección es alta y el escenario queda fijo mientras las capas se funden (portada.js escribe --escena, 0 → 6). -->
+<section class="escenas" id="inicio" aria-label="Alcalá en el local">
+  <div class="escenas__fijo">
+    <picture class="escenas__capa" style="--i:1">
+      <source media="(orientation: portrait)" srcset="media/escenas/escena-1-v-800.webp 800w, media/escenas/escena-1-v-1280.webp 1280w" sizes="100vw">
+      <img src="media/escenas/escena-1-h-1280.webp" srcset="media/escenas/escena-1-h-1280.webp 1280w, media/escenas/escena-1-h-2048.webp 2048w" sizes="100vw" alt="Logo en latón sobre azulejos burdeos" width="2048" height="1158" fetchpriority="high">
     </picture>
-    <!-- fondo fijo: el vídeo en bucle quedó descartado (js/hero.js se conserva por si se vuelve a querer) -->
+    <picture class="escenas__capa" style="--i:2">
+      <source media="(orientation: portrait)" srcset="media/escenas/escena-2-v-800.webp 800w, media/escenas/escena-2-v-1280.webp 1280w" sizes="100vw">
+      <img src="media/escenas/escena-2-h-1280.webp" srcset="media/escenas/escena-2-h-1280.webp 1280w, media/escenas/escena-2-h-2048.webp 2048w" sizes="100vw" alt="Logo en cacao sobre un café con leche" width="2048" height="1158" loading="lazy">
+    </picture>
+    <picture class="escenas__capa" style="--i:3">
+      <source media="(orientation: portrait)" srcset="media/escenas/escena-3-v-800.webp 800w, media/escenas/escena-3-v-1280.webp 1280w" sizes="100vw">
+      <img src="media/escenas/escena-3-h-1280.webp" srcset="media/escenas/escena-3-h-1280.webp 1280w, media/escenas/escena-3-h-2048.webp 2048w" sizes="100vw" alt="Logo en latón sobre azulejos azules" width="2048" height="1158" loading="lazy">
+    </picture>
+    <picture class="escenas__capa" style="--i:4">
+      <source media="(orientation: portrait)" srcset="media/escenas/escena-4-v-800.webp 800w, media/escenas/escena-4-v-1280.webp 1280w" sizes="100vw">
+      <img src="media/escenas/escena-4-h-1280.webp" srcset="media/escenas/escena-4-h-1280.webp 1280w, media/escenas/escena-4-h-2048.webp 2048w" sizes="100vw" alt="Logo grabado en el servilletero" width="2048" height="1158" loading="lazy">
+    </picture>
+    <picture class="escenas__capa" style="--i:5">
+      <source media="(orientation: portrait)" srcset="media/escenas/escena-5-v-800.webp 800w, media/escenas/escena-5-v-1280.webp 1280w" sizes="100vw">
+      <img src="media/escenas/escena-5-h-1280.webp" srcset="media/escenas/escena-5-h-1280.webp 1280w, media/escenas/escena-5-h-2048.webp 2048w" sizes="100vw" alt="Logo tostado en el pan de una hamburguesa" width="2048" height="1158" loading="lazy">
+    </picture>
+    <picture class="escenas__capa" style="--i:6">
+      <source media="(orientation: portrait)" srcset="media/escenas/escena-6-v-800.webp 800w, media/escenas/escena-6-v-1280.webp 1280w" sizes="100vw">
+      <img src="media/escenas/escena-6-h-1280.webp" srcset="media/escenas/escena-6-h-1280.webp 1280w, media/escenas/escena-6-h-2048.webp 2048w" sizes="100vw" alt="Logo dibujado con aceite sobre una tostada" width="2048" height="1158" loading="lazy">
+    </picture>
+    <picture class="escenas__capa" style="--i:7">
+      <source media="(orientation: portrait)" srcset="media/escenas/escena-7-v-800.webp 800w, media/escenas/escena-7-v-1280.webp 1280w" sizes="100vw">
+      <img src="media/escenas/escena-7-h-1280.webp" srcset="media/escenas/escena-7-h-1280.webp 1280w, media/escenas/escena-7-h-2048.webp 2048w" sizes="100vw" alt="Logo de pistacho sobre un açaí de fruta de temporada" width="2048" height="1158" loading="lazy">
+    </picture>
+    <span class="hero__scroll" aria-hidden="true"></span>
   </div>
+</section>
+
+<!-- hero: la frase de la casa y los botones, después de las escenas (la foto y el logo del hero antiguo se fueron a las escenas) -->
+<section class="hero hero--frase">
   <div class="hero__velo" aria-hidden="true"></div>
-  <!-- logo liso (SVG vectorizado del logo del cliente); la versión 3D está en js/hero-3d.js -->
-  <div class="hero__logo hero__logo--liso" aria-hidden="true"><i></i></div>
   <div class="hero__texto">
     <h1 class="hero__h1">Alcalá · Cafetería y baristas en Cullera<b>Tu punto de encuentro desde 1987.</b></h1>
     <div class="hero__botones">
@@ -101,7 +129,6 @@
       <a class="btn" href="#visitanos">Cómo llegar</a>
     </div>
   </div>
-  <span class="hero__scroll" aria-hidden="true"></span>
 </section>
 
 <!-- arco burdeos que cierra la foto del hero con una curva y se aplana al subir (paso 1 de plan-transiciones.md) -->
@@ -291,7 +318,7 @@
 window.CLIPS = [1,2,3,4,5,6,7,8,9].map(function(i){ return { video: 'media/reels/reel' + i + '.mp4', poster: 'media/reels/reel' + i + '.webp', destino: 'https://instagram.com/cafeteriaalcala' }; });
 </script>
 <script src="lib/lenis.min.js" defer></script>
-<script src="js/base.js?v=9" defer></script>
-<script src="js/portada.js?v=6" defer></script>
+<script src="js/base.js?v=10" defer></script>
+<script src="js/portada.js?v=7" defer></script>
 </body>
 </html>

@@ -17,33 +17,25 @@
 .presenta.lamina{ border-radius:0 }
 @media (prefers-reduced-motion:reduce){ .hero-arco{ animation:none; transform:none } }
 
-/* ---------- salida coreografiada del hero (paso 2) ----------
-   El hero es sticky y la lámina de presentación le pasa por encima, así que la «salida» no es la del propio hero
-   sino el recorrido del scroll sobre su altura: 0 con la página arriba, 1 cuando la lámina lo tapa del todo.
-   Es el mismo tramo que el arco. Recorridos de referencia-onform.md 4.3: la foto baja 160 px y escala
-   1.035 → 1.1 (el fondo sobresale 160 px por arriba para que no asome el color de detrás), el logo sube 96 px,
-   escala .975 y se apaga al 75 %, el h1 sube 54 px y se apaga entre el 8 % y el 68 %, los botones suben 78 px.
-   La barra de arriba no se toca: aquí sigue siendo la navegación de toda la página.
-   Con animation-timeline lo lleva el CSS sobre scroll(root); si no, --hero-travel (portada.js) en los calc. */
-.hero__fondo{ inset:-160px 0 0 }
-.hero__fondo img{ transform:translateY(calc(var(--hero-travel,0) * 160px)) scale(calc(1.035 + var(--hero-travel,0) * .065)); will-change:transform }
-.hero__logo--liso i{ transform:translateY(calc(var(--hero-travel,0) * -96px)) scale(calc(1 - var(--hero-travel,0) * .025)); opacity:clamp(0, 1 - var(--hero-travel,0) / .75, 1); will-change:transform,opacity }
-.hero__h1{ transform:translateY(calc(var(--hero-travel,0) * -54px)); opacity:calc(.92 * clamp(0, 1 - (var(--hero-travel,0) - .08) / .6, 1)) }
-.hero__botones{ transform:translateY(calc(var(--hero-travel,0) * -78px)) }
-@supports (animation-timeline: scroll()){
-  .hero__fondo img, .hero__logo--liso i, .hero__h1, .hero__botones{ animation-timing-function:linear; animation-fill-mode:both; animation-timeline:scroll(root); animation-range:0 max(100svh, 560px) }
-  .hero__fondo img{ animation-name:heroFondoSale }
-  .hero__logo--liso i{ animation-name:heroLogoSale }
-  .hero__h1{ animation-name:heroH1Sale }
-  .hero__botones{ animation-name:heroBotonesSale }
-}
-@keyframes heroFondoSale{ from{ transform:translateY(0) scale(1.035) } to{ transform:translateY(160px) scale(1.1) } }
-@keyframes heroLogoSale{ 0%{ transform:translateY(0) scale(1); opacity:1 } 75%{ opacity:0 } 100%{ transform:translateY(-96px) scale(.975); opacity:0 } }
-@keyframes heroH1Sale{ 0%{ transform:none; opacity:.92 } 8%{ opacity:.92 } 68%{ opacity:0 } 100%{ transform:translateY(-54px); opacity:0 } }
-@keyframes heroBotonesSale{ from{ transform:none } to{ transform:translateY(-78px) } }
+/* ---------- escenas: el logo en el local, siempre centrado ----------
+   Sección alta (una pantalla por escena, menos un poco) con un escenario fijo de 100svh. Las siete fotos van
+   apiladas; portada.js escribe --escena (0 → 6, suavizado) y cada capa i se funde cuando --escena pasa de i − 2 a i − 1,
+   mientras se acerca un poco (scale 1.04 → 1). Al cargar, la primera escena «llega» desde cerca y desenfocada
+   (.escenas--entra, que pone base.js cuando el telón se va). Con «reducir movimiento» se ve la primera escena fija. */
+.escenas{ position:relative; z-index:1; height:calc(100svh + 6 * var(--escena-paso, 80svh)); background:var(--burdeos-2) }
+.escenas__fijo{ position:sticky; top:0; height:100svh; min-height:560px; overflow:hidden }
+.escenas__capa{ position:absolute; inset:0; display:block; --t:clamp(0, var(--escena,0) - (var(--i) - 2), 1);   /* la capa i se funde cuando --escena pasa de i − 2 a i − 1 (la 2 en 0 → 1 … la 7 en 5 → 6) */
+  opacity:clamp(0, (var(--t) - .35) / .3, 1);   /* el fundido ocurre entre el 35 % y el 65 % del paso: así los dos logos casi no se superponen */
+  transform:scale(calc(1.04 - .04 * var(--t))); transform-origin:50% 50%; will-change:opacity, transform }
+.escenas__fijo::after{ content:""; position:absolute; inset:0 0 auto 0; height:140px; background:linear-gradient(180deg, rgba(74,15,29,.5), rgba(74,15,29,0)); pointer-events:none }   /* para que la barra se lea sobre las fotos claras */
+.escenas__capa:first-child{ opacity:1; transform:none }
+.escenas__capa img{ width:100%; height:100%; object-fit:cover; object-position:50% 50%; display:block }
+.escenas .hero__scroll{ opacity:calc(.7 * clamp(0, 1 - var(--escena,0) * 2, 1)) }
+.escenas--entra .escenas__capa:first-child{ animation:escenaLlega 1.6s var(--lento) .2s both }
+@keyframes escenaLlega{ from{ transform:scale(1.6); filter:blur(14px); opacity:0 } 35%{ opacity:1 } to{ transform:scale(1); filter:blur(0); opacity:1 } }
 @media (prefers-reduced-motion:reduce){
-  .hero__fondo img, .hero__logo--liso i, .hero__h1, .hero__botones{ animation:none; transform:none }
-  .hero__logo--liso i{ opacity:1 } .hero__h1{ opacity:.92 }
+  .escenas{ height:100svh }
+  .escenas__capa{ display:none } .escenas__capa:first-child{ display:block; animation:none; opacity:1; transform:none }
 }
 
 /* ---------- presentación: lectura por scroll (paso 6) ----------

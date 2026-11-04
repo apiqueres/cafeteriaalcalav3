@@ -236,8 +236,8 @@
      Sólo la primera vez en la sesión (el guion de la cabecera pone html.sin-telon o html.llegada si no toca).
      La animación del logo dura ~2,4 s; después las cinco persianas salen de lado. Se salta con scroll, tecla o clic. */
   var telon = document.getElementById('telon');
-  /* el logo del hero aterriza (CSS: .hero--entra) cuando el telón se va, o al momento si no hay telón */
-  var aterrizar = function(){ var h = document.querySelector('.hero'); if(h) h.classList.add('hero--entra'); };
+  /* la primera escena «llega» (CSS: .escenas--entra) cuando el telón se va, o al momento si no hay telón */
+  var aterrizar = function(){ var e = document.querySelector('.escenas'); if(e) e.classList.add('escenas--entra'); var h = document.querySelector('.hero'); if(h) h.classList.add('hero--entra'); };
   if(!telon) aterrizar();
   else if(raiz.classList.contains('llegada') || raiz.classList.contains('sin-telon')){ telon.classList.add('quitado'); try{ sessionStorage.setItem('telon', '1'); }catch(e){} aterrizar(); }
   else {

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carta Alcalá en PDF</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../media/favicon.png" type="image/png">
+<link rel="stylesheet" href="../lib/fonts/fuentes.css">
+<link rel="stylesheet" href="../css/carta-pdf.css?v=1">
+</head>
+<body>
+<!-- La carta lista para guardar en PDF. Se abre desde el panel (/administracion) con ?v=impresa o ?v=web;
+     el documento lo monta js/carta-pdf.js con los datos del panel. Ctrl+P → «Guardar como PDF». -->
+<div class="barra" aria-label="Opciones">
+  <b>Carta en PDF</b><span id="cuenta"></span><span>En el diálogo de impresión elige «Guardar como PDF» como destino, tamaño A4, sin márgenes.</span>
+  <span class="sep"></span><a id="otra" href="?v=web">Ver la otra variante</a><button type="button" id="imprimir">Guardar como PDF</button>
+</div>
+
+<!-- iconos de los 14 alérgenos (los mismos que en carta/index.html) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="alg-gluten" viewBox="0 0 24 24"><path d="M12 22V9"/><path d="M12 9c-3 0-5-2-5-5 3 0 5 2 5 5zM12 9c3 0 5-2 5-5-3 0-5 2-5 5zM12 14c-3 0-5-2-5-5 3 0 5 2 5 5zM12 14c3 0 5-2 5-5-3 0-5 2-5 5zM12 19c-3 0-5-2-5-5 3 0 5 2 5 5zM12 19c3 0 5-2 5-5-3 0-5 2-5 5z"/></symbol>
+  <symbol id="alg-crustaceos" viewBox="0 0 24 24"><path d="M4 12c0-4 3-7 8-7s8 3 8 7-3 7-8 7-8-3-8-7z"/><path d="M4 12H2M20 12h2M7 8l-2-3M17 8l2-3M7 16l-2 3M17 16l2 3M9 11h.01M15 11h.01"/></symbol>
+  <symbol id="alg-huevos" viewBox="0 0 24 24"><path d="M12 3c3.5 0 7 5.5 7 10.5A7 7 0 0 1 5 13.5C5 8.5 8.5 3 12 3z"/></symbol>
+  <symbol id="alg-pescado" viewBox="0 0 24 24"><path d="M3 12c3-4 7-6 11-6 2 0 4 1 7 3-3 2-5 3-7 3-4 0-8-2-11 0z"/><path d="M3 12c3 4 7 6 11 6 2 0 4-1 7-3M21 9l-3 3 3 3M8 12h.01"/></symbol>
+  <symbol id="alg-cacahuetes" viewBox="0 0 24 24"><path d="M9 3a4 4 0 0 0-3 7 4 4 0 0 0 0 4 4 4 0 1 0 6 3 4 4 0 0 0 3-7 4 4 0 0 0 0-4A4 4 0 1 0 9 3z"/><path d="M9 8h.01M12 12h.01M15 16h.01"/></symbol>
+  <symbol id="alg-soja" viewBox="0 0 24 24"><path d="M12 22V12"/><path d="M12 12C8 12 5 9 5 5c4 0 7 3 7 7zM12 12c0-4 3-7 7-7 0 4-3 7-7 7z"/><ellipse cx="12" cy="18" rx="3" ry="4"/></symbol>
+  <symbol id="alg-lacteos" viewBox="0 0 24 24"><path d="M8 2h8v4l2 4v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V10l2-4z"/><path d="M6 13h12"/></symbol>
+  <symbol id="alg-cascara" viewBox="0 0 24 24"><path d="M12 3c4 0 7 3.5 7 8.5S16 21 12 21s-7-4.5-7-9.5S8 3 12 3z"/><path d="M8 8c2.5-1 5.5-1 8 0"/></symbol>
+  <symbol id="alg-apio" viewBox="0 0 24 24"><path d="M9 22V10M15 22V10M12 22V8"/><path d="M9 10c-3-1-4-4-3-7 3 0 5 2 6 5M15 10c3-1 4-4 3-7-3 0-5 2-6 5"/></symbol>
+  <symbol id="alg-mostaza" viewBox="0 0 24 24"><path d="M8 7h8v13a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2z"/><path d="M9 7V4h6v3M8 13h8"/></symbol>
+  <symbol id="alg-sesamo" viewBox="0 0 24 24"><ellipse cx="7" cy="8" rx="2" ry="3" transform="rotate(-30 7 8)"/><ellipse cx="15" cy="7" rx="2" ry="3" transform="rotate(20 15 7)"/><ellipse cx="10" cy="15" rx="2" ry="3" transform="rotate(10 10 15)"/><ellipse cx="17" cy="16" rx="2" ry="3" transform="rotate(-25 17 16)"/></symbol>
+  <symbol id="alg-sulfitos" viewBox="0 0 24 24"><path d="M7 3h10l-1 8a4 4 0 0 1-8 0z"/><path d="M12 15v6M8 21h8"/></symbol>
+  <symbol id="alg-altramuces" viewBox="0 0 24 24"><path d="M12 21V11"/><path d="M12 11c-4 0-6-3-6-7 4 0 6 3 6 7zM12 11c4 0 6-3 6-7-4 0-6 3-6 7z"/><path d="M8 21c0-3 2-5 4-5s4 2 4 5"/></symbol>
+  <symbol id="alg-moluscos" viewBox="0 0 24 24"><path d="M3 11a9 9 0 0 1 18 0c0 3-4 7-9 10C7 18 3 14 3 11z"/><path d="M12 21V8M7 17l5-9M17 17l-5-9"/></symbol>
+</svg>
+
+<main id="doc"></main>
+
+<script src="../js/carta-datos.js?v=1"></script>
+<script src="../js/carta-pdf.js?v=1"></script>
+</body>
+</html>

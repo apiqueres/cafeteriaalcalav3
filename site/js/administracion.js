@@ -46,12 +46,15 @@
       + '<section class="tarjeta"><h2>Avisos</h2>'
       + (sinAlg ? '<div class="aviso"><b>' + sinAlg + ' platos</b>&nbsp;sin alérgenos marcados. Revísalos antes de publicar.</div>' : '<div class="aviso"><b>Todo en orden.</b>&nbsp;Todos los platos tienen alérgenos.</div>')
       + '<p class="nota" style="margin-top:.9rem">Los cambios se guardan en este navegador. Cuando el servidor esté en marcha, se guardarán en la web de verdad y se traducirán solos.</p>'
-      + '<div class="acciones"><a class="btn btn--sin" href="#" data-accion="exportar">Exportar datos</a><a class="btn btn--rojo" href="#" data-accion="restablecer">Restablecer ejemplo</a></div></section></div>';
+      + '<div class="acciones"><a class="btn btn--sin" href="#" data-accion="exportar">Exportar datos</a><a class="btn btn--rojo" href="#" data-accion="restablecer">Restablecer ejemplo</a></div></section>'
+      /* la carta en PDF: se abre administracion/carta-pdf.html en una pestaña nueva y el navegador la guarda como PDF */
+      + '<section class="tarjeta tarjeta--pdf"><h2>Carta en PDF</h2><p class="nota">Genera la carta con los platos, precios y alérgenos de ahora mismo (sólo lo visible). Se abre una vista previa y el navegador pregunta dónde guardarla: elige «Guardar como PDF».</p>'
+      + '<div class="pdf-botones"><a class="btn btn--lleno" href="carta-pdf.html?v=impresa" target="_blank" rel="noopener">Carta impresa<small>Idéntica a la del local</small></a><a class="btn" href="carta-pdf.html?v=web" target="_blank" rel="noopener">Carta nueva<small>Con el estilo de la web</small></a></div></section></div>';
   };
   V.carta = function(){
     if(!cat || !catDe(cat)) cat = D.categorias[0].id;
     var lista = platosDe(cat).filter(function(p){ return !filtro || (p.n + ' ' + p.d).toLowerCase().indexOf(filtro) >= 0; });
-    return '<div class="ad-cab"><div><h1>Carta</h1><p>Cambia un plato y la web se actualiza al momento.</p></div><a class="btn btn--lleno" href="#" data-accion="nuevo">+ Nuevo plato</a></div>'
+    return '<div class="ad-cab"><div><h1>Carta</h1><p>Cambia un plato y la web se actualiza al momento.</p></div><div class="ad-cab__acciones"><a class="btn btn--sin" href="carta-pdf.html?v=impresa" target="_blank" rel="noopener" title="Carta impresa, idéntica a la del local">PDF impresa</a><a class="btn btn--sin" href="carta-pdf.html?v=web" target="_blank" rel="noopener" title="Carta nueva con el estilo de la web">PDF estilo web</a><a class="btn btn--lleno" href="#" data-accion="nuevo">+ Nuevo plato</a></div></div>'
       + '<div class="ad-grid"><section class="tarjeta"><h2>Platos <label class="buscar-ad"><input type="search" id="buscaAd" placeholder="Buscar…" value="' + esc(filtro) + '"></label></h2>'
       + '<div class="cat-tabs">' + D.categorias.slice().sort(function(a, b){ return a.orden - b.orden; }).map(function(c){ return '<span data-cat="' + c.id + '" class="' + (c.id === cat ? 'on' : '') + (c.visible ? '' : ' oculta') + '">' + esc(c.n) + '</span>'; }).join('') + '</div>'
       + '<div class="lista">' + (lista.length ? lista.map(function(p, i){ var c = catDe(p.cat); return '<div class="fila' + (sel === p.id ? ' activo' : '') + (p.visible ? '' : ' off') + '" data-id="' + p.id + '">'

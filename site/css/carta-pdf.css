@@ -1,0 +1,111 @@
+/* Alcalá — carta-pdf.css: la carta en A4 para imprimir o guardar en PDF (administracion/carta-pdf.html).
+   Variante «impresa» (body.v-impresa): como la carta impresa del local, rojo y Oswald, tres columnas.
+   Variante «web» (body.v-web): la misma carta con el estilo de la web, burdeos, hueso, oro, Fraunces y Manrope.
+   Medidas en mm: cada .pag es un A4 (210 × 297). Las categorías empiezan en página nueva; si una no cabe,
+   sigue en la siguiente sin partir ningún plato. */
+*{ box-sizing:border-box; margin:0; padding:0 }
+html{ -webkit-print-color-adjust:exact; print-color-adjust:exact }
+@page{ size:A4; margin:0 }
+:root{ --rojo:#B41E2D; --burdeos:#6B1A2B; --burdeos-2:#4A0F1D; --hueso:#F3EEE4; --hueso-2:#E8E1D3; --hueso-3:#DCD3C2; --oro:#B8924F; --oro-claro:#D9BC7E; --oro-oscuro:#8E6D37; --carbon:#1C1818 }
+body{ background:#6a6a6a; font-size:16px; line-height:1.3 }
+img{ display:block }
+.oculto{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0) }
+
+/* barra de arriba (sólo en pantalla) */
+.barra{ position:fixed; top:0; left:0; right:0; z-index:9; display:flex; align-items:center; gap:1rem; padding:.6rem 1rem; background:var(--carbon); color:var(--hueso); font:500 .85rem/1.3 'Manrope',system-ui,sans-serif; box-shadow:0 4px 20px rgba(0,0,0,.35) }
+.barra b{ font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.78rem; color:var(--oro-claro) }
+.barra span{ opacity:.8 }
+.barra .sep{ flex:1 }
+.barra a{ color:var(--oro-claro) }
+.barra button{ font:700 .8rem/1 'Manrope',system-ui,sans-serif; letter-spacing:.1em; text-transform:uppercase; padding:.7rem 1.2rem; border-radius:999px; border:0; background:var(--oro); color:var(--burdeos-2); cursor:pointer }
+.barra button:hover{ background:var(--oro-claro) }
+
+/* páginas */
+.pag{ position:relative; width:210mm; height:297mm; background:#fff; overflow:hidden; break-after:page; page-break-after:always }
+.pag:last-child{ break-after:auto; page-break-after:auto }
+@media screen{ body{ padding:5rem 0 3rem } .pag{ margin:0 auto 1.6rem; box-shadow:0 12px 40px rgba(0,0,0,.45) } }
+@media print{ body{ background:none; padding:0 } .pag{ margin:0; box-shadow:none } .barra{ display:none } }
+.pag__num{ position:absolute; left:0; right:0; bottom:8mm; text-align:center }
+.plato{ break-inside:avoid; page-break-inside:avoid }
+
+/* alérgenos: círculos con el icono en blanco (colores de la carta impresa) */
+.alg{ position:relative; display:inline-grid; place-items:center; width:4.8mm; height:4.8mm; border-radius:50%; color:#fff; background:#888 }
+.alg svg{ width:3.1mm; height:3.1mm; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round }
+.alg--gluten{ background:#D98A3E } .alg--crustaceos{ background:#2F9FD8 } .alg--huevos{ background:#E39A2A } .alg--pescado{ background:#1E5BA8 }
+.alg--cacahuetes{ background:#B07A4A } .alg--soja{ background:#3C9E4A } .alg--lacteos{ background:#6B3F2A } .alg--cascara{ background:#B33A4A }
+.alg--apio{ background:#8DC43C } .alg--mostaza{ background:#B59A2E } .alg--sesamo{ background:#8A8A6A } .alg--sulfitos{ background:#7A2A5A }
+.alg--altramuces{ background:#E2C53A } .alg--moluscos{ background:#4FB7D8 }
+
+/* páginas de continuación de una categoría (las crea carta-pdf.js al paginar): cabecera baja, sin foto */
+.v-impresa .pag--sigue .cat__cab{ height:34mm; padding-top:11mm }
+.v-impresa .pag--sigue .cat__cab h2{ font-size:9mm }
+.v-web .pag--sigue .cat__cab{ grid-template-columns:1fr; padding-top:14mm }
+.v-web .pag--sigue .cat__cab h2{ font-size:9mm }
+
+/* ====================== variante impresa ====================== */
+.v-impresa{ font-family:'Oswald',sans-serif; color:#2b2b2b }
+.v-impresa .pag--portada{ background:var(--rojo); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding:46mm 0 16mm; text-align:center }
+.v-impresa .portada__logo{ width:86mm; height:auto }
+.v-impresa .portada__titulo{ font-weight:700; font-size:33mm; line-height:1; letter-spacing:.01em; text-transform:uppercase }
+.v-impresa .portada__pie{ display:grid; grid-template-columns:auto auto; gap:1.5mm 16mm; font-weight:300; font-size:5mm; text-align:left }
+.v-impresa .cat__cab{ background:var(--rojo); color:#fff; height:66mm; padding:18mm 14mm 0; position:relative }
+.v-impresa .cat__cab h2{ font-weight:700; text-transform:uppercase; font-size:12mm; line-height:1.08; max-width:105mm }
+.v-impresa .cat__foto{ position:absolute; right:14mm; top:17mm; width:76mm; height:57mm; object-fit:cover; border-radius:4mm; box-shadow:0 8mm 12mm -6mm rgba(0,0,0,.5) }
+.v-impresa .platos{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9mm 7mm; padding:16mm 14mm 22mm }
+.v-impresa .plato__cab{ display:grid; grid-template-columns:minmax(0,1fr) auto; column-gap:1.5mm; align-items:end }
+.v-impresa .plato__nom{ grid-column:1; font-weight:600; font-size:5.5mm; line-height:1.05; color:var(--rojo) }
+.v-impresa .plato__raya{ grid-column:1; height:1.1mm; background:var(--rojo); margin-top:1.2mm }
+.v-impresa .plato__precio{ grid-column:2; grid-row:1 / 3; align-self:end; font-weight:600; font-size:4.6mm; line-height:1; color:var(--rojo); white-space:nowrap }
+.v-impresa .plato__p2{ font-weight:400; font-size:3.4mm; color:var(--rojo); margin-top:1.2mm }
+.v-impresa .plato__desc{ font-weight:300; font-size:3.6mm; line-height:1.35; color:#4a4a4a; margin-top:1.8mm }
+.v-impresa .plato__alg{ display:flex; flex-wrap:wrap; gap:.8mm; margin-top:1.8mm }
+.v-impresa .tag{ display:inline-block; vertical-align:middle; font-weight:500; font-size:2.6mm; line-height:1; letter-spacing:.08em; text-transform:uppercase; color:#fff; background:var(--rojo); padding:.8mm 1.4mm .6mm; border-radius:1mm; margin-left:1mm }
+.v-impresa .pag__num{ color:var(--rojo); font-weight:500; font-size:4.2mm }
+.v-impresa .pag--leyenda .cat__cab{ height:66mm }
+.v-impresa .leyenda{ list-style:none; display:grid; grid-template-columns:repeat(7,1fr); gap:10mm 3mm; padding:18mm 22mm 0; text-align:center }
+.v-impresa .leyenda li{ display:grid; justify-items:center; gap:2mm; font-weight:300; font-size:3mm; text-transform:uppercase; line-height:1.2 }
+.v-impresa .leyenda .alg{ width:18mm; height:18mm }
+.v-impresa .leyenda .alg svg{ width:10mm; height:10mm; stroke-width:1.6 }
+.v-impresa .leyenda__nota{ font-weight:300; font-size:4.6mm; line-height:1.3; text-align:center; max-width:168mm; margin:14mm auto 0 }
+
+/* ====================== variante estilo web ====================== */
+.v-web{ font-family:'Manrope',system-ui,sans-serif; color:var(--carbon) }
+.v-web .pag{ background:var(--hueso) }
+.v-web .pag--cat::before, .v-web .pag--leyenda::before{ content:""; position:absolute; inset:0; background:url(../media/texturas/papel.webp) center/560px; opacity:.32; mix-blend-mode:multiply; pointer-events:none }
+.v-web .pag--portada{ background:var(--burdeos); color:var(--hueso); display:flex; flex-direction:column; justify-content:space-between; padding:34mm 20mm 18mm; isolation:isolate }
+.v-web .pag--portada::before{ content:""; position:absolute; inset:0; z-index:-1; background:url(../media/texturas/azulejo.webp) center/420px; opacity:.14; mix-blend-mode:luminosity }
+.v-web .pag--portada::after{ content:""; position:absolute; inset:auto 0 0 0; height:50%; z-index:-1; background:linear-gradient(transparent, rgba(74,15,29,.85)) }
+.v-web .portada__logo{ width:64mm; height:auto; margin-bottom:16mm }
+.v-web .portada__ceja{ font-family:'Fraunces',Georgia,serif; font-style:italic; font-size:6.2mm; color:var(--oro-claro); font-variation-settings:"SOFT" 100,"opsz" 72 }
+.v-web .portada__titulo{ font-family:'Fraunces',Georgia,serif; font-weight:700; font-size:30mm; line-height:1; letter-spacing:-.01em; margin:3mm 0 6mm; font-variation-settings:"SOFT" 100,"opsz" 72 }
+.v-web .portada__frase{ font-family:'Fraunces',Georgia,serif; font-style:italic; font-size:7mm; color:var(--oro-claro); font-variation-settings:"SOFT" 100,"opsz" 72 }
+.v-web .portada__pie{ display:flex; flex-wrap:wrap; gap:2mm 9mm; font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:3mm; color:var(--oro-claro) }
+.v-web .cat__cab{ position:relative; display:grid; grid-template-columns:minmax(0,1fr) 62mm; gap:8mm; align-items:end; padding:18mm 16mm 0 }
+.v-web .cat__cab h2{ font-family:'Fraunces',Georgia,serif; font-weight:700; font-size:13mm; line-height:1.04; letter-spacing:-.01em; color:var(--burdeos); font-variation-settings:"SOFT" 100,"opsz" 72 }
+.v-web .cat__cab p{ font-size:3.7mm; line-height:1.5; opacity:.85; margin-top:2.5mm; max-width:100mm }
+.v-web .cat__foto{ width:62mm; height:46.5mm; object-fit:cover; border-radius:16px 0 16px 0; box-shadow:0 10mm 14mm -8mm rgba(28,24,24,.5), 0 0 0 .4mm rgba(184,146,79,.5) }
+.v-web .platos{ position:relative; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 10mm; padding:8mm 16mm 22mm }
+.v-web .plato{ padding:4.2mm 0; border-bottom:.3mm dashed var(--hueso-3) }
+.v-web .plato__cab{ display:flex; justify-content:space-between; align-items:baseline; gap:4mm }
+.v-web .plato__raya{ display:none }
+.v-web .plato__nom{ font-family:'Fraunces',Georgia,serif; font-weight:700; font-size:4.6mm; line-height:1.15; color:var(--burdeos-2); font-variation-settings:"SOFT" 100,"opsz" 48 }
+.v-web .plato__precio{ font-family:'Fraunces',Georgia,serif; font-weight:700; font-size:4.4mm; color:var(--oro-oscuro); white-space:nowrap; font-variation-settings:"SOFT" 100,"opsz" 48 }
+.v-web .plato__p2{ font-weight:700; font-size:2.7mm; letter-spacing:.06em; text-transform:uppercase; color:var(--oro-oscuro); opacity:.85; margin-top:.8mm }
+.v-web .plato__desc{ font-size:3.4mm; line-height:1.5; opacity:.85; margin-top:1.2mm }
+.v-web .plato__alg{ display:flex; flex-wrap:wrap; gap:1.2mm; margin-top:2mm }
+.v-web .alg{ width:5.4mm; height:5.4mm; background:var(--hueso-2); color:var(--burdeos); box-shadow:inset 0 0 0 .3mm rgba(184,146,79,.5) }
+.v-web .alg svg{ width:3.3mm; height:3.3mm; stroke-width:1.7 }
+.v-web .tag{ display:inline-block; vertical-align:middle; font-family:'Manrope',system-ui,sans-serif; font-weight:700; font-size:2.4mm; line-height:1; letter-spacing:.1em; text-transform:uppercase; padding:.8mm 1.4mm .6mm; border-radius:1mm; border:.3mm solid currentColor; margin-left:1mm }
+.v-web .tag--nuevo{ color:#C7703F } .v-web .tag--reco{ color:var(--oro-oscuro) } .v-web .tag--vegano{ color:#4F7A3A } .v-web .tag--singluten{ color:#3E5663 } .v-web .tag--picante{ color:#8A2438 }
+.v-web .pag__num{ display:flex; justify-content:space-between; padding:0 16mm; font-weight:700; text-transform:uppercase; letter-spacing:.14em; font-size:2.8mm; color:var(--burdeos) }
+.v-web .pag--leyenda{ background:var(--burdeos-2); color:var(--hueso) }
+.v-web .pag--leyenda::before{ background-image:url(../media/texturas/azulejo.webp); background-size:420px; opacity:.1; mix-blend-mode:luminosity }
+.v-web .pag--leyenda .cat__cab{ grid-template-columns:1fr }
+.v-web .pag--leyenda .cat__cab h2{ color:var(--oro-claro) }
+.v-web .leyenda{ position:relative; list-style:none; display:grid; grid-template-columns:repeat(2,1fr); gap:5mm 12mm; padding:12mm 16mm 0 }
+.v-web .leyenda li{ display:flex; align-items:center; gap:4mm; font-size:4mm }
+.v-web .leyenda .alg{ width:11mm; height:11mm; background:rgba(243,238,228,.1); color:var(--oro-claro); box-shadow:none }
+.v-web .leyenda .alg svg{ width:6.5mm; height:6.5mm; stroke-width:1.6 }
+.v-web .leyenda__nota{ position:relative; font-size:3.6mm; line-height:1.55; opacity:.8; max-width:160mm; margin:12mm 16mm 0 }
+.v-web .leyenda__nota+.leyenda__nota{ margin-top:4mm }
+.v-web .pag--leyenda .pag__num{ color:var(--oro-claro) }

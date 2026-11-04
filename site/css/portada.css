@@ -18,15 +18,15 @@
 @media (prefers-reduced-motion:reduce){ .hero-arco{ animation:none; transform:none } }
 
 /* ---------- escenas: el logo en el local, siempre centrado ----------
-   Sección alta (una pantalla por escena, menos un poco) con un escenario fijo de 100svh. Las siete fotos van
+   Sección alta (poco más de media pantalla por escena) con un escenario fijo de 100svh. Las siete fotos van
    apiladas; portada.js escribe --escena (0 → 6, suavizado) y cada capa i se funde cuando --escena pasa de i − 2 a i − 1,
-   mientras se acerca un poco (scale 1.04 → 1). Al cargar, la primera escena «llega» desde cerca y desenfocada
+   con un corte casi seco, mientras se acerca un poco (scale 1.025 → 1). Al cargar, la primera escena «llega» desde cerca y desenfocada
    (.escenas--entra, que pone base.js cuando el telón se va). Con «reducir movimiento» se ve la primera escena fija. */
-.escenas{ position:relative; z-index:1; height:calc(100svh + 6 * var(--escena-paso, 80svh)); background:var(--burdeos-2) }
+.escenas{ position:relative; z-index:1; height:calc(100svh + 6 * var(--escena-paso, 55svh)); background:var(--burdeos-2) }
 .escenas__fijo{ position:sticky; top:0; height:100svh; min-height:560px; overflow:hidden }
 .escenas__capa{ position:absolute; inset:0; display:block; --t:clamp(0, var(--escena,0) - (var(--i) - 2), 1);   /* la capa i se funde cuando --escena pasa de i − 2 a i − 1 (la 2 en 0 → 1 … la 7 en 5 → 6) */
-  opacity:clamp(0, (var(--t) - .35) / .3, 1);   /* el fundido ocurre entre el 35 % y el 65 % del paso: así los dos logos casi no se superponen */
-  transform:scale(calc(1.04 - .04 * var(--t))); transform-origin:50% 50%; will-change:opacity, transform }
+  opacity:clamp(0, (var(--t) - .46) / .08, 1);   /* corte casi seco: el fundido dura el 8 % del paso, en su mitad */
+  transform:scale(calc(1.025 - .025 * var(--t))); transform-origin:50% 50%; will-change:opacity, transform }
 .escenas__fijo::after{ content:""; position:absolute; inset:0 0 auto 0; height:140px; background:linear-gradient(180deg, rgba(74,15,29,.5), rgba(74,15,29,0)); pointer-events:none }   /* para que la barra se lea sobre las fotos claras */
 .escenas__capa:first-child{ opacity:1; transform:none }
 .escenas__capa img{ width:100%; height:100%; object-fit:cover; object-position:50% 50%; display:block }

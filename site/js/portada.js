@@ -40,7 +40,7 @@
 
 /* ---------- escenas: --escena (0 → 6) según el scroll ----------
    La sección .escenas es alta y su escenario queda fijo; el progreso es (scroll dentro de la sección) / (un paso
-   por escena). Se suaviza con valor += (objetivo - valor) * (1 - exp(-dt/95)) y se escribe en la sección como
+   por escena). Se suaviza apenas con valor += (objetivo - valor) * (1 - exp(-dt/40)) y se escribe en la sección como
    --escena; el CSS funde cada capa con ese número. También escribe --hero-travel en <html> (0 → 1 en la última
    pantalla de la sección) para el arco, en navegadores sin animation-timeline. */
 (function(){
@@ -58,7 +58,7 @@
   }
   function paso2(t){
     var dt = Math.min(100, t - ultT); ultT = t;
-    valor += (objetivo - valor) * (1 - Math.exp(-dt / 95));
+    valor += (objetivo - valor) * (1 - Math.exp(-dt / 40));   /* poco suavizado: que responda al scroll */
     if(Math.abs(objetivo - valor) < .0005){ valor = objetivo; activo = false; }
     sec.style.setProperty('--escena', valor.toFixed(4));
     if(activo) requestAnimationFrame(paso2);

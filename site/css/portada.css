@@ -105,12 +105,11 @@
 .visita__acciones{ display:flex; flex-wrap:wrap; gap:.6rem; margin-top:.8rem }
 .visita__mapa{ aspect-ratio:4/3; max-height:60vh; width:100%; border-radius:var(--r-logo); overflow:hidden; background:var(--azulejo-2); box-shadow:var(--sombra-carta), inset 0 0 0 1.5px rgba(184,146,79,.45); position:relative }
 .visita__nota{ margin-top:.8rem; font-size:.92rem; opacity:.8 }
-/* mapa clásico (ilustración sobre cartografía real); la mancha de café es el local */
+/* mapa clásico (ilustración sobre cartografía real); una cruz roja de mapa del tesoro marca el local */
 .mapa{ position:absolute; inset:0; display:block; overflow:hidden; border-radius:inherit }
-.mapa img{ width:100%; height:100%; object-fit:cover; transform-origin:47.5% 71.4%; transition:transform 1.2s var(--lento); filter:none }
+.mapa img{ width:100%; height:100%; object-fit:cover; transform-origin:48.2% 72.5%; transition:transform 1.2s var(--lento); filter:none }
 .mapa:hover img{ transform:scale(1.12) }
-.mapa__halo{ position:absolute; left:47.5%; top:71.4%; width:9%; aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; box-shadow:0 0 0 2px rgba(107,26,43,.55); animation:halo 2.6s ease-out infinite; pointer-events:none }
-@keyframes halo{ 0%{ transform:translate(-50%,-50%) scale(.6); opacity:.9 } 100%{ transform:translate(-50%,-50%) scale(1.6); opacity:0 } }
+.mapa__cruz{ position:absolute; left:48.2%; top:72.5%; width:9%; aspect-ratio:1; transform:translate(-50%,-50%) rotate(-6deg); fill:none; stroke:#B8232E; stroke-width:11; stroke-linecap:round; stroke-linejoin:round; opacity:.92; filter:drop-shadow(0 1px 1px rgba(60,20,10,.45)); pointer-events:none }
 .mapa__nota{ position:absolute; right:.8rem; bottom:.8rem; padding:.35rem .7rem; border-radius:999px; background:rgba(74,15,29,.85); color:var(--hueso); font-family:var(--ff-ui); font-weight:700; text-transform:uppercase; letter-spacing:.1em; font-size:.66rem; opacity:0; transform:translateY(4px); transition:opacity .3s, transform .4s var(--lento) }
 .mapa:hover .mapa__nota, .mapa:focus-visible .mapa__nota{ opacity:1; transform:none }
 @media (hover:none){ .mapa__nota{ opacity:1; transform:none } }

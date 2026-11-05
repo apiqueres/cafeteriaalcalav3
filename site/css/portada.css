@@ -22,8 +22,8 @@
    apiladas; portada.js escribe --escena (0 → 2) y cada capa i se funde cuando --escena pasa de i − 2 a i − 1,
    con un corte casi seco. Al cargar, la primera escena «llega» desde cerca y desenfocada
    (.escenas--entra, que pone base.js cuando el telón se va). Con «reducir movimiento» se ve la primera escena fija. */
-.escenas{ position:relative; z-index:1; height:calc(100svh + 2 * var(--escena-paso, 55svh)); background:var(--burdeos-2) }   /* 100svh + (escenas − 1) × paso */
-.escenas__fijo{ position:sticky; top:0; height:100svh; min-height:560px; overflow:hidden }
+.escenas{ position:relative; z-index:1; height:calc(100lvh + 2 * var(--escena-paso, 55svh)); background:var(--burdeos-2) }   /* pantalla grande + (escenas − 1) × paso: el recorrido no cambia al recogerse la barra del móvil */
+.escenas__fijo{ position:sticky; top:0; height:100vh; height:100dvh; min-height:560px; overflow:hidden }   /* dvh: sigue a la barra del navegador del móvil; con svh asomaba una franja abajo al recogerse */
 .escenas__capa{ position:absolute; inset:0; display:block; visibility:hidden; --t:clamp(0, var(--escena,0) - (var(--i) - 2), 1);   /* la capa i se funde cuando --escena pasa de i − 2 a i − 1 (la 2 en 0 → 1, la 3 en 1 → 2) */
   opacity:clamp(0, (var(--t) - .46) / .08, 1);   /* corte casi seco: el fundido dura el 8 % del paso, en su mitad */
   will-change:opacity }
@@ -35,7 +35,7 @@
 .escenas--entra .escenas__capa:first-child{ animation:escenaLlega 1.6s var(--lento) .2s both }
 @keyframes escenaLlega{ from{ transform:scale(1.6); filter:blur(14px); opacity:0 } 35%{ opacity:1 } to{ transform:scale(1); filter:blur(0); opacity:1 } }
 @media (prefers-reduced-motion:reduce){
-  .escenas{ height:100svh }
+  .escenas{ height:100vh; height:100dvh }
   .escenas__capa{ display:none } .escenas__capa:first-child{ display:block; animation:none; opacity:1; transform:none }
 }
 

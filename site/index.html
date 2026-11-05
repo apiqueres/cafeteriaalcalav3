@@ -25,7 +25,7 @@
   if(t && Date.now() - t < 4000) h.className += ' llegada';
   else if(sessionStorage.getItem('telon') === '1' || location.hash || matchMedia('(prefers-reduced-motion: reduce)').matches) h.className += ' sin-telon'; }catch(e){} })();</script>
 <link rel="stylesheet" href="css/base.css?v=16">
-<link rel="stylesheet" href="css/portada.css?v=13">
+<link rel="stylesheet" href="css/portada.css?v=14">
 <link rel="preload" href="media/logo.svg" as="image">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -83,8 +83,8 @@
 </header>
 
 <!-- escenas: al entrar, sólo el logo en el local (azulejos burdeos); al bajar, el logo aparece en otros rincones y
-     productos de la cafetería, siempre centrado. Siete fotos generadas (originales en imagenes/escenas-logo); la
-     sección es alta y el escenario queda fijo mientras las capas se funden (portada.js escribe --escena, 0 → 6). -->
+     productos de la cafetería, siempre centrado. Tres fotos generadas (originales en imagenes/escenas-logo); la
+     sección es alta y el escenario queda fijo mientras las capas se funden (portada.js escribe --escena, 0 → 2). -->
 <section class="escenas" id="inicio" aria-label="Alcalá en el local">
   <div class="escenas__fijo">
     <picture class="escenas__capa" style="--i:1">
@@ -98,22 +98,6 @@
     <picture class="escenas__capa" style="--i:3">
       <source media="(orientation: portrait)" srcset="media/escenas/escena-3-v-800.webp 800w, media/escenas/escena-3-v-1280.webp 1280w" sizes="100vw">
       <img src="media/escenas/escena-3-h-1280.webp" srcset="media/escenas/escena-3-h-1280.webp 1280w, media/escenas/escena-3-h-2048.webp 2048w" sizes="100vw" alt="Logo hecho de azulejos sobre la pared azul" width="2048" height="1158" loading="lazy">
-    </picture>
-    <picture class="escenas__capa" style="--i:4">
-      <source media="(orientation: portrait)" srcset="media/escenas/escena-4-v-800.webp 800w, media/escenas/escena-4-v-1280.webp 1280w" sizes="100vw">
-      <img src="media/escenas/escena-4-h-1280.webp" srcset="media/escenas/escena-4-h-1280.webp 1280w, media/escenas/escena-4-h-2048.webp 2048w" sizes="100vw" alt="Logo grabado en una jarra de cerveza" width="2048" height="1158" loading="lazy">
-    </picture>
-    <picture class="escenas__capa" style="--i:5">
-      <source media="(orientation: portrait)" srcset="media/escenas/escena-5-v-800.webp 800w, media/escenas/escena-5-v-1280.webp 1280w" sizes="100vw">
-      <img src="media/escenas/escena-5-h-1280.webp" srcset="media/escenas/escena-5-h-1280.webp 1280w, media/escenas/escena-5-h-2048.webp 2048w" sizes="100vw" alt="Logo marcado a fuego en la carne a la parrilla" width="2048" height="1158" loading="lazy">
-    </picture>
-    <picture class="escenas__capa" style="--i:6">
-      <source media="(orientation: portrait)" srcset="media/escenas/escena-6-v-800.webp 800w, media/escenas/escena-6-v-1280.webp 1280w" sizes="100vw">
-      <img src="media/escenas/escena-6-h-1280.webp" srcset="media/escenas/escena-6-h-1280.webp 1280w, media/escenas/escena-6-h-2048.webp 2048w" sizes="100vw" alt="Logo dibujado con aceite sobre una tostada" width="2048" height="1158" loading="lazy">
-    </picture>
-    <picture class="escenas__capa" style="--i:7">
-      <source media="(orientation: portrait)" srcset="media/escenas/escena-7-v-800.webp 800w, media/escenas/escena-7-v-1280.webp 1280w" sizes="100vw">
-      <img src="media/escenas/escena-7-h-1280.webp" srcset="media/escenas/escena-7-h-1280.webp 1280w, media/escenas/escena-7-h-2048.webp 2048w" sizes="100vw" alt="Logo de pistacho sobre un açaí de fruta de temporada" width="2048" height="1158" loading="lazy">
     </picture>
     <span class="hero__scroll" aria-hidden="true"></span>
   </div>

@@ -18,13 +18,13 @@
 @media (prefers-reduced-motion:reduce){ .hero-arco{ animation:none; transform:none } }
 
 /* ---------- escenas: el logo en el local, siempre centrado ----------
-   Sección alta (poco más de media pantalla por escena) con un escenario fijo de 100svh. Las siete fotos van
-   apiladas; portada.js escribe --escena (0 → 6, suavizado) y cada capa i se funde cuando --escena pasa de i − 2 a i − 1,
+   Sección alta (poco más de media pantalla por escena) con un escenario fijo de 100svh. Las tres fotos van
+   apiladas; portada.js escribe --escena (0 → 2) y cada capa i se funde cuando --escena pasa de i − 2 a i − 1,
    con un corte casi seco. Al cargar, la primera escena «llega» desde cerca y desenfocada
    (.escenas--entra, que pone base.js cuando el telón se va). Con «reducir movimiento» se ve la primera escena fija. */
-.escenas{ position:relative; z-index:1; height:calc(100svh + 6 * var(--escena-paso, 55svh)); background:var(--burdeos-2) }
+.escenas{ position:relative; z-index:1; height:calc(100svh + 2 * var(--escena-paso, 55svh)); background:var(--burdeos-2) }   /* 100svh + (escenas − 1) × paso */
 .escenas__fijo{ position:sticky; top:0; height:100svh; min-height:560px; overflow:hidden }
-.escenas__capa{ position:absolute; inset:0; display:block; visibility:hidden; --t:clamp(0, var(--escena,0) - (var(--i) - 2), 1);   /* la capa i se funde cuando --escena pasa de i − 2 a i − 1 (la 2 en 0 → 1 … la 7 en 5 → 6) */
+.escenas__capa{ position:absolute; inset:0; display:block; visibility:hidden; --t:clamp(0, var(--escena,0) - (var(--i) - 2), 1);   /* la capa i se funde cuando --escena pasa de i − 2 a i − 1 (la 2 en 0 → 1, la 3 en 1 → 2) */
   opacity:clamp(0, (var(--t) - .46) / .08, 1);   /* corte casi seco: el fundido dura el 8 % del paso, en su mitad */
   will-change:opacity }
 .escenas__fijo::after{ content:""; position:absolute; inset:0 0 auto 0; height:140px; background:linear-gradient(180deg, rgba(74,15,29,.5), rgba(74,15,29,0)); pointer-events:none }   /* para que la barra se lea sobre las fotos claras */

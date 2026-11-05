@@ -38,7 +38,7 @@
   } else vids.forEach(play);
 })();
 
-/* ---------- escenas: --escena (0 → 6) según el scroll ----------
+/* ---------- escenas: --escena (0 → n−1) según el scroll ----------
    La sección .escenas es alta y su escenario queda fijo; el progreso es (scroll dentro de la sección) / (un paso
    por escena) y se escribe tal cual en la sección como --escena (sin suavizar: el corte sigue a la rueda). Sólo
    quedan visibles la escena actual y la que entra (clase .viva), para que el navegador no componga siete fotos a

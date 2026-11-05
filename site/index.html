@@ -25,7 +25,7 @@
   if(t && Date.now() - t < 4000) h.className += ' llegada';
   else if(sessionStorage.getItem('telon') === '1' || location.hash || matchMedia('(prefers-reduced-motion: reduce)').matches) h.className += ' sin-telon'; }catch(e){} })();</script>
 <link rel="stylesheet" href="css/base.css?v=16">
-<link rel="stylesheet" href="css/portada.css?v=16">
+<link rel="stylesheet" href="css/portada.css?v=17">
 <link rel="preload" href="media/logo.svg" as="image">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -218,9 +218,9 @@
           <a class="mapa" href="https://www.google.com/maps/dir/?api=1&destination=Cafeter%C3%ADa+Alcal%C3%A1,+C.+del+Pintor+Ferrer+Cabrera,+3,+46400+Cullera" target="_blank" rel="noopener" aria-label="Mapa clásico de Cullera con la cafetería marcada; abre cómo llegar en Google Maps">
             <picture>
               <source media="(max-width:640px)" srcset="media/fotos/mapa-clasico-movil.webp">
-              <img src="media/fotos/mapa-clasico.webp" alt="Plano de Cullera de estilo 1900 en blanco y negro: una cruz roja marca Alcalá, en el barrio de San Antonio junto a la playa" width="1400" height="1045" loading="lazy">
+              <img src="media/fotos/mapa-clasico.webp" alt="Plano de Cullera de estilo 1900 en blanco y negro: un marcador de ubicación burdeos señala Alcalá, en el barrio de San Antonio junto a la playa" width="1400" height="1045" loading="lazy">
             </picture>
-            <svg class="mapa__cruz" viewBox="0 0 100 100" aria-hidden="true"><path d="M14 18 C 32 34, 50 52, 86 84 M84 14 C 62 40, 42 58, 16 86"/></svg>
+            <svg class="mapa__pin" viewBox="0 0 24 32" aria-hidden="true"><path d="M12 .8C5.8.8.8 5.8.8 12c0 8.6 11.2 19.2 11.2 19.2S23.2 20.6 23.2 12C23.2 5.8 18.2.8 12 .8z"/><circle cx="12" cy="12" r="4.6"/></svg>
             <span class="mapa__nota">Toca para abrir cómo llegar</span>
           </a>
         </figure>

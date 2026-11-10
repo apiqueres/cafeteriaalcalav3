@@ -25,7 +25,7 @@
   if(t && Date.now() - t < 4000) h.className += ' llegada';
   else if(sessionStorage.getItem('telon') === '1' || location.hash || matchMedia('(prefers-reduced-motion: reduce)').matches) h.className += ' sin-telon'; }catch(e){} })();</script>
 <link rel="stylesheet" href="css/base.css?v=17">
-<link rel="stylesheet" href="css/portada.css?v=19">
+<link rel="stylesheet" href="css/portada.css?v=20">
 <link rel="preload" href="media/logo.svg" as="image">
 <script>/* Escena del día: la portada enseña UNA de las tres fotos del logo y va rotando. MODO 'dia' cambia de foto cada
    día (a medianoche, hora del visitante); MODO 'franja' la elige por la hora: café con leche por la mañana, azulejos
@@ -160,19 +160,17 @@
     <div class="caja lamina__in">
       <div class="cartaDest__cab">
         <h2 class="titular t-l" id="t-carta">La carta.</h2>
-        <p class="rv">Desde el café de la mañana hasta el cóctel de la tarde. Toca una categoría para verla entera, con precios y alérgenos.</p>
+        <p class="rv">Seis cartas, desde el café de la mañana hasta el cóctel de la tarde. Toca una para verla entera, con sus precios.</p>
       </div>
-      <ul class="categorias" aria-label="Categorías de la carta">
-        <li class="rv" style="--d:.1s"><a class="cat" href="carta/#desayunos"><img src="media/carta/desayunos.webp" alt="" width="800" height="603" loading="lazy"><span>Desayunos</span></a></li>
-        <li class="rv" style="--d:.2s"><a class="cat" href="carta/#cafes"><img src="media/carta/cafes.webp" alt="" width="800" height="603" loading="lazy"><span>Cafés</span></a></li>
-        <li class="rv" style="--d:.3s"><a class="cat" href="carta/#bocadillos"><img src="media/carta/bocadillos.webp" alt="" width="800" height="603" loading="lazy"><span>Bocadillos</span></a></li>
-        <li class="rv" style="--d:.4s"><a class="cat" href="carta/#hamburguesas"><img src="media/carta/hamburguesas.webp" alt="" width="800" height="603" loading="lazy"><span>Hamburguesas</span></a></li>
-        <li class="rv" style="--d:.5s"><a class="cat" href="carta/#carnes"><img src="media/carta/carnes.webp" alt="" width="800" height="603" loading="lazy"><span>Carnes</span></a></li>
-        <li class="rv" style="--d:.6s"><a class="cat" href="carta/#vegana"><img src="media/carta/vegana.webp" alt="" width="800" height="603" loading="lazy"><span>Carta vegana</span></a></li>
-        <li class="rv" style="--d:.7s"><a class="cat" href="carta/#postres"><img src="media/carta/postres.webp" alt="" width="800" height="603" loading="lazy"><span>Postres</span></a></li>
-        <li class="rv" style="--d:.8s"><a class="cat" href="carta/#cocteles"><img src="media/carta/cocteles.webp" alt="" width="800" height="603" loading="lazy"><span>Cócteles</span></a></li>
+      <ul class="categorias categorias--cartas" aria-label="Las cartas">
+        <li class="rv" style="--d:.1s"><a class="cat" href="carta/?c=general"><img src="media/carta/hamburguesas.webp" alt="" width="800" height="603" loading="lazy"><span>Carta general</span></a></li>
+        <li class="rv" style="--d:.2s"><a class="cat" href="carta/?c=desayunos"><img src="media/carta/desayunos.webp" alt="" width="800" height="603" loading="lazy"><span>Desayunos</span></a></li>
+        <li class="rv" style="--d:.3s"><a class="cat" href="carta/?c=cafes"><img src="media/carta/cafes.webp" alt="" width="800" height="603" loading="lazy"><span>Cafés</span></a></li>
+        <li class="rv" style="--d:.4s"><a class="cat" href="carta/?c=vinos"><img src="media/carta/vinos.webp" alt="" width="800" height="603" loading="lazy"><span>Vinos</span></a></li>
+        <li class="rv" style="--d:.5s"><a class="cat" href="carta/?c=cervezas"><img src="media/carta/cervezas.webp" alt="" width="800" height="603" loading="lazy"><span>Cervezas</span></a></li>
+        <li class="rv" style="--d:.6s"><a class="cat" href="carta/?c=cocteles"><img src="media/carta/cocteles.webp" alt="" width="800" height="603" loading="lazy"><span>Cócteles</span></a></li>
       </ul>
-      <div class="cartaDest__pie rv" style="--d:.9s"><a class="btn btn--lleno" href="carta/">Ver toda la carta</a></div>
+      <div class="cartaDest__pie rv" style="--d:.7s"><a class="btn btn--lleno" href="carta/">Ver todas las cartas</a></div>
     </div>
   </section>
 

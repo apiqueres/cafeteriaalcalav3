@@ -8,7 +8,8 @@
    diálogo de impresión al cargar (para revisar la vista previa). */
 (function(){
   var q = new URLSearchParams(location.search), V = q.get('v') === 'web' ? 'web' : 'impresa';
-  var ALG = window.ALERGENOS || [], ETQ = window.ETIQUETAS || {};
+  var ALG = window.ALERGENOS || [], ETQ = window.ETIQUETAS || {}, CARTAS = window.CARTAS || [{ id: 'general', n: 'La carta', corto: 'Carta general' }];
+  var K = CARTAS.filter(function(k){ return k.id === q.get('c'); })[0] || CARTAS[0];   /* ?c=<carta>: cuál de las cartas sale en el PDF (por defecto, la general) */
   var algNombre = {}; ALG.forEach(function(a){ algNombre[a.id] = a.n; });
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
 
@@ -16,16 +17,17 @@
   function datos(){
     var cats = null, local = null;
     try{
-      var D = JSON.parse(localStorage.getItem('alcala.datos') || 'null');
+      var D = JSON.parse(localStorage.getItem('alcala.datos.2') || 'null');
       if(D && D.categorias && D.platos){
         local = D.local || null;
         cats = D.categorias.filter(function(c){ return c.visible; }).sort(function(a, b){ return a.orden - b.orden; }).map(function(c){
-          return { id: c.id, n: c.n, d: c.d || '', foto: c.foto || '',
+          return { id: c.id, carta: c.carta || 'general', n: c.n, d: c.d || '', foto: c.foto || '',
             platos: D.platos.filter(function(p){ return p.cat === c.id && p.visible; }).sort(function(a, b){ return a.orden - b.orden; }) };
         }).filter(function(c){ return c.platos.length; });
       }
     }catch(e){}
-    if(!cats) cats = (window.CARTA || []).map(function(c){ return { id: c.id, n: c.n, d: c.d || '', foto: c.foto || '', platos: c.platos || [] }; });
+    if(!cats) cats = (window.CARTA || []).map(function(c){ return { id: c.id, carta: c.carta || 'general', n: c.n, d: c.d || '', foto: c.foto || '', platos: c.platos || [] }; });
+    cats = cats.filter(function(c){ return c.carta === K.id; });
     local = local || {};
     return { cats: cats, local: {
       tel: local.tel || '961 72 50 98', ig: local.ig || 'cafeteriaalcala', fb: local.fb || 'cafeteria.alcala', tiktok: local.tiktok || 'cafeteriaalcala',
@@ -39,7 +41,7 @@
   function plato(p){
     return '<article class="plato">'
       + '<header class="plato__cab"><h3 class="plato__nom">' + esc(p.n) + (tags(p) ? ' ' + tags(p) : '') + '</h3><span class="plato__raya"></span><span class="plato__precio">' + precio(p.p) + '</span></header>'
-      + (p.p2 ? '<p class="plato__p2">' + esc(p.e2 || '') + ' ' + precio(p.p2) + '</p>' : '')
+      + ((p.e || p.p2) ? '<p class="plato__p2">' + [p.e ? esc(p.e) : '', p.p2 ? esc(p.e2 || '') + ' ' + precio(p.p2) : ''].filter(Boolean).join(' · ') + '</p>' : '')
       + (p.d ? '<p class="plato__desc">' + esc(p.d) + '</p>' : '')
       + ((p.a || []).length ? '<div class="plato__alg">' + p.a.map(icono).join('') + '</div>' : '')
       + '</article>';
@@ -51,11 +53,11 @@
   }
   function portada(L){
     if(V === 'web') return '<section class="pag pag--portada">'
-      + '<div><img class="portada__logo" src="../media/logo-oro.webp" alt="Alcalá · Cafetería · Baristas" width="600" height="600"><p class="portada__ceja">Cafetería · Baristas · Cullera</p><h1 class="portada__titulo">La carta.</h1><p class="portada__frase">' + esc(L.frase) + '</p></div>'
+      + '<div><img class="portada__logo" src="../media/logo-oro.webp" alt="Alcalá · Cafetería · Baristas" width="600" height="600"><p class="portada__ceja">Cafetería · Baristas · Cullera</p><h1 class="portada__titulo">' + esc(K.n) + '.</h1><p class="portada__frase">' + esc(L.frase) + '</p></div>'
       + '<div class="portada__pie"><span>' + esc(L.dir) + ' · ' + esc(L.cp) + '</span><span>' + esc(L.tel) + '</span><span>@' + esc(L.ig) + '</span><span>alcalacullera.com</span></div></section>';
     return '<section class="pag pag--portada">'
       + '<img class="portada__logo" src="../media/logo-blanco.webp" alt="Alcalá · Cafetería · Baristas" width="600" height="600">'
-      + '<h1 class="portada__titulo">La carta</h1>'
+      + '<h1 class="portada__titulo">' + esc(K.n) + '</h1>'
       + '<div class="portada__pie"><span>f @' + esc(L.fb) + '</span><span>www.cafeteriaalcala.es</span><span>◎ @' + esc(L.ig) + '</span><span>✆ ' + esc(L.tel) + '</span></div></section>';
   }
   function categoria(c, num){
@@ -75,11 +77,11 @@
   /* ---------- montar ---------- */
   var d = datos(), html = portada(d.local);
   d.cats.forEach(function(c, i){ html += categoria(c, i + 1); });
-  html += leyenda(d.cats.length + 1);
+  if(!K.sinAlg) html += leyenda(d.cats.length + 1);   /* la leyenda de alérgenos sólo en las cartas que los detallan */
   document.getElementById('doc').innerHTML = html;
   document.body.classList.add('v-' + V);
   var hoy = new Date(), fecha = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
-  document.title = 'Carta Alcalá ' + (V === 'web' ? 'estilo web' : 'impresa') + ' ' + fecha;   /* nombre que propone el navegador para el PDF */
+  document.title = 'Carta Alcalá ' + (K.corto || K.n).toLowerCase() + ' ' + (V === 'web' ? 'estilo web' : 'impresa') + ' ' + fecha;   /* nombre que propone el navegador para el PDF */
   /* paginar: cada .pag mide exactamente un A4; si una categoría no cabe, los últimos platos pasan a una página
      de continuación (misma categoría, cabecera baja) hasta que todo cabe. Así no dependemos de cómo parta el
      navegador una rejilla, y los números de página quedan bien. */
@@ -109,7 +111,7 @@
   var fuentesListas = document.fonts ? document.fonts.ready : Promise.resolve();
   fuentesListas.then(paginar);
   var cuenta = document.getElementById('cuenta'); if(cuenta) cuenta.textContent = d.cats.length + ' categorías · ' + d.cats.reduce(function(n, c){ return n + c.platos.length; }, 0) + ' platos';
-  var otra = document.getElementById('otra'); if(otra){ otra.href = '?v=' + (V === 'web' ? 'impresa' : 'web') + (q.has('sinimprimir') ? '&sinimprimir' : ''); otra.textContent = V === 'web' ? 'Ver la variante impresa' : 'Ver la variante estilo web'; }
+  var otra = document.getElementById('otra'); if(otra){ otra.href = '?v=' + (V === 'web' ? 'impresa' : 'web') + '&c=' + K.id + (q.has('sinimprimir') ? '&sinimprimir' : ''); otra.textContent = V === 'web' ? 'Ver la variante impresa' : 'Ver la variante estilo web'; }
 
   /* imprimir: botón, y automático al cargar cuando fuentes e imágenes están listas (salvo ?sinimprimir) */
   var btn = document.getElementById('imprimir'); if(btn) btn.addEventListener('click', function(){ print(); });

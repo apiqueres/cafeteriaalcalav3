@@ -71,3 +71,106 @@ body.carta-pag::before{ content:""; position:fixed; inset:0; z-index:-1; backgro
 .plato__nom{ font-family:var(--ff-titulo); font-weight:700; text-transform:none; letter-spacing:0; font-size:1.22rem; line-height:1.15; font-variation-settings:"SOFT" 100,"opsz" 48 }
 .plato__precio{ font-family:var(--ff-titulo); font-weight:700; font-size:1.18rem; font-variation-settings:"SOFT" 100,"opsz" 48 }
 .plato__precio small{ font-family:var(--ff-ui); font-weight:700 }
+
+/* ---------- selector de carta (carta/ sin ?c=) ----------
+   Seis tarjetas con la forma del logo, una por carta. En móvil van de dos en dos y cuadradas para que quepan las
+   seis sin apenas bajar. */
+.carta-pag--elige .carta__cab{ padding:calc(var(--nav) + 1.8rem) 0 1.6rem }
+.carta-pag--elige .carta__cab .titular{ font-size:clamp(2.4rem,5vw,4.4rem) }
+.carta-pag--elige .carta__sellos{ display:none }
+.carta__sellos[hidden], .carta__otras[hidden]{ display:none }   /* el atributo hidden no gana a display:flex por sí solo */
+.elige{ padding:clamp(1.6rem,3.6vw,3.2rem) 0 clamp(3rem,6vw,5rem) }
+.elige__lista{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(.8rem,1.6vw,1.6rem) }
+.elige__carta{ position:relative; display:block; aspect-ratio:4/3; overflow:hidden; border-radius:var(--r-logo); background:var(--burdeos-2); color:var(--hueso);
+  box-shadow:var(--sombra-carta); transition:transform .5s var(--lento), box-shadow .4s }
+.elige__carta img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .9s var(--lento) }
+.elige__carta::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(74,15,29,.28), rgba(74,15,29,0) 30%, rgba(74,15,29,.9) 82%) }
+.elige__num{ position:absolute; z-index:1; top:.9rem; left:1.1rem; font-family:var(--ff-detalle); font-style:italic; font-size:1.05rem; color:var(--oro-claro) }
+.elige__txt{ position:absolute; z-index:1; left:1.1rem; right:1.1rem; bottom:1rem; display:grid; gap:.3rem }
+.elige__txt b{ font-family:var(--ff-titulo); font-weight:700; font-size:clamp(1.5rem,2.5vw,2.4rem); line-height:1.04; font-variation-settings:"SOFT" 100,"opsz" 72 }
+.elige__txt small{ font-size:.9rem; line-height:1.4; opacity:.92; max-width:40ch }
+.elige__txt em{ font-style:normal; font-family:var(--ff-ui); font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:.7rem; color:var(--oro-claro); display:flex; justify-content:space-between; align-items:center; gap:.6rem; margin-top:.15rem }
+.elige__txt em i{ font-style:normal; margin-right:auto }
+.elige__txt em::after{ content:"→"; font-family:var(--ff-cuerpo); font-size:1rem; transition:transform .4s var(--lento) }
+.elige__carta:hover, .elige__carta:focus-visible{ transform:translateY(-5px); box-shadow:var(--sombra-carta), 0 0 0 1.5px var(--oro) }
+.elige__carta:hover img{ transform:scale(1.06) }
+.elige__carta:hover em::after{ transform:translateX(5px) }
+@media (min-width:900px){ .elige__carta{ aspect-ratio:auto; height:clamp(220px, calc((100vh - 27.5rem) / 2), 380px); height:clamp(220px, calc((100dvh - 27.5rem) / 2), 380px) } }   /* dos filas que caben en la pantalla */
+@media (max-width:1099px){ .elige__txt small{ display:none } }
+@media (max-width:699px){
+  .elige__lista{ grid-template-columns:repeat(2,minmax(0,1fr)) }
+  .elige__carta{ aspect-ratio:1 }
+  .elige__txt{ left:.8rem; right:.8rem; bottom:.75rem }
+  .elige__txt em{ font-size:.62rem; letter-spacing:.08em }
+  .elige__num{ top:.65rem; left:.8rem }
+  .elige__txt em i{ display:none }                          /* en móvil sólo el número de platos */
+  .carta-pag--elige .flotante{ display:none }               /* los botones flotantes tapaban la última carta */
+}
+
+/* ---------- una carta: enlaces a las otras, pestañas ---------- */
+.carta__otras{ display:flex; flex-wrap:wrap; align-items:center; gap:.45rem; margin-top:.7rem }
+.carta__otras span{ font-family:var(--ff-ui); font-weight:700; text-transform:uppercase; letter-spacing:.14em; font-size:.72rem; color:var(--oro-claro); margin-right:.3rem }
+.carta__otras a{ font-family:var(--ff-ui); font-weight:700; text-transform:uppercase; letter-spacing:.1em; font-size:.76rem; padding:.42rem .8rem; border:1.5px solid rgba(243,238,228,.35); border-radius:var(--r-boton-s); transition:background .25s, border-color .25s, color .25s }
+.carta__otras a:hover{ background:var(--oro); border-color:var(--oro); color:var(--burdeos-2) }
+.carta__otras a.carta__otras-todas{ border-color:transparent; color:var(--oro-claro); padding-inline:.4rem }
+.carta__otras a.carta__otras-todas::after{ content:" →"; font-family:var(--ff-cuerpo) }
+.carta__otras a.carta__otras-todas:hover{ background:none; color:var(--hueso) }
+.tabs__in--una a[data-tab]{ display:none }
+.tabs__in--una .buscar{ margin-left:0 }
+.leyenda__aviso{ max-width:70ch; font-size:1rem !important; opacity:.9 !important; margin-top:0 !important }
+
+/* ---------- botón de foto del plato ----------
+   Misma ficha redonda que los alérgenos, pero en negativo (burdeos con el icono claro), algo mayor, con aro de oro
+   y sombra: se lee como botón. Al pasar el ratón crece y se vuelve oro. */
+.plato__foto{ flex:none; width:32px; height:32px; margin-right:.2rem; border-radius:50%; display:grid; place-items:center; cursor:pointer; background:var(--burdeos); color:var(--hueso);
+  box-shadow:0 0 0 1.5px var(--oro), 0 6px 12px -6px rgba(74,15,29,.75); transition:transform .35s var(--lento), background .25s, color .25s, box-shadow .25s }
+.plato__foto svg{ width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round }
+.plato__foto:hover, .plato__foto:focus-visible{ transform:scale(1.14); background:var(--oro); color:var(--burdeos-2); box-shadow:0 0 0 1.5px var(--burdeos), 0 8px 16px -6px rgba(74,15,29,.7); outline:none }
+.plato__foto:active{ transform:scale(.96) }
+
+/* ---------- diálogo de foto ----------
+   <dialog> con la forma del logo: marco burdeos con dos esquinas redondas (arriba-der y abajo-izq) y dos rectas, y
+   un filete de oro por dentro. La foto llega en cinco tiras que entran de lado y componen la imagen (cada tira lleva
+   la foto entera desplazada −una tira × n, como las persianas del menú); después sube el pie con el nombre, el
+   precio y los alérgenos, superpuesto a la foto. .abierto lo pone carta.js al abrir; .lista, cuando la foto ya está
+   descargada. Al quitar las clases, las tiras se van y el marco se apaga (salida). */
+.fotodlg{ --R:clamp(36px,7vw,68px); --marco:clamp(7px,1vw,11px); position:fixed; inset:0; margin:auto; border:0; padding:0; background:none; color:var(--hueso); overflow:visible;
+  width:min(92vw, 800px, calc(84vh * 4 / 3)); width:min(92vw, 800px, calc(84dvh * 4 / 3)); height:fit-content; max-width:none; max-height:none }
+.fotodlg::backdrop{ background:rgba(40,8,16,.8); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); opacity:0; transition:opacity .45s ease }
+.fotodlg.abierto::backdrop{ opacity:1 }
+.fotodlg__marco{ position:relative; aspect-ratio:4/3; padding:var(--marco); background:var(--burdeos); border-radius:0 var(--R) 0 var(--R);
+  box-shadow:0 50px 90px -40px rgba(0,0,0,.85), 0 0 0 1.5px rgba(184,146,79,.55); opacity:0; transform:scale(.94) translateY(14px); transition:opacity .4s ease, transform .5s var(--lento) }
+.fotodlg.abierto .fotodlg__marco{ opacity:1; transform:none; transition:opacity .4s ease, transform .8s var(--lento) }
+.fotodlg__in{ position:relative; height:100%; overflow:hidden; isolation:isolate; background:var(--burdeos-2); border-radius:0 calc(var(--R) - var(--marco)) 0 calc(var(--R) - var(--marco)) }
+.fotodlg__in::after{ content:""; position:absolute; inset:0; z-index:3; border-radius:inherit; box-shadow:inset 0 0 0 1.5px rgba(217,188,126,.6); pointer-events:none }
+.fotodlg__tiras{ position:absolute; inset:0 }
+.fotodlg__tiras i{ position:absolute; left:0; width:100%; top:calc(var(--n,0) * 20%); height:calc(20% + 1px); overflow:hidden; transform:translateX(102%); transition:transform .42s var(--telon) }
+.fotodlg__tiras i:nth-child(odd){ transform:translateX(-102%) }
+.fotodlg__tiras b{ position:absolute; left:0; top:calc(var(--n,0) * -1 * (100% - 1px)); width:100%; height:calc(500% - 5px); padding:6% 9% 23%;
+  background:var(--foto) center / contain no-repeat content-box, radial-gradient(120% 90% at 50% 36%, #FDFCF8 0%, var(--hueso) 56%, var(--hueso-3) 100%) }
+.fotodlg--llena .fotodlg__tiras b{ padding:0; background:var(--foto) center / cover no-repeat, radial-gradient(120% 90% at 50% 36%, #FDFCF8 0%, var(--hueso) 56%, var(--hueso-3) 100%) }
+.fotodlg.lista .fotodlg__tiras i{ transform:none; transition-duration:.735s; transition-delay:calc(.14s + var(--n,0) * 65ms) }
+.fotodlg__pie{ position:absolute; z-index:2; inset:auto 0 0 0; display:grid; gap:.35rem; padding:clamp(2.8rem,9vw,5.2rem) clamp(1.1rem,3.2vw,2.1rem) clamp(1rem,2.4vw,1.6rem);
+  background:linear-gradient(180deg, rgba(74,15,29,0), rgba(74,15,29,.88) 48%, var(--burdeos-2)); opacity:0; transform:translateY(16px); transition:opacity .25s ease, transform .25s ease }
+.fotodlg.lista .fotodlg__pie{ opacity:1; transform:none; transition:opacity .6s ease .66s, transform .9s var(--lento) .66s }
+.fotodlg__cat{ font-family:var(--ff-ui); font-weight:700; text-transform:uppercase; letter-spacing:.16em; font-size:.72rem; color:var(--oro-claro) }
+.fotodlg__nom{ font-family:var(--ff-titulo); font-weight:700; font-size:clamp(1.7rem,4.6vw,3rem); line-height:1.03; font-variation-settings:"SOFT" 100,"opsz" 72; text-wrap:balance; color:var(--hueso) }
+.fotodlg__datos{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem 1rem; margin-top:.3rem }
+.fotodlg__precio{ font-family:var(--ff-titulo); font-weight:700; font-size:1.25rem; color:var(--oro-claro); font-variation-settings:"SOFT" 100,"opsz" 48 }
+.fotodlg .alg{ margin-left:auto; flex-wrap:wrap; justify-content:flex-end; gap:.35rem }
+.fotodlg .alg i{ width:28px; height:28px; background:var(--hueso); color:var(--burdeos); box-shadow:inset 0 0 0 1px rgba(184,146,79,.7) }
+.fotodlg .alg svg{ width:17px; height:17px }
+.fotodlg__cerrar{ position:absolute; z-index:4; top:calc(var(--marco) + 16px); right:calc(var(--marco) + 16px); width:42px; height:42px; border-radius:0 15px 0 15px; display:grid; place-items:center; cursor:pointer;
+  background:rgba(74,15,29,.86); color:var(--hueso); font-size:1.05rem; line-height:1; box-shadow:0 0 0 1.5px rgba(217,188,126,.7); transition:background .25s, color .25s, transform .35s var(--lento) }
+.fotodlg__cerrar:hover, .fotodlg__cerrar:focus-visible{ background:var(--oro); color:var(--burdeos-2); transform:scale(1.08); outline:none }
+@media (max-width:699px){
+  .fotodlg{ width:min(92vw, calc(80vh * 4 / 5)); width:min(92vw, calc(80dvh * 4 / 5)) }
+  .fotodlg__marco{ aspect-ratio:4/5 }
+  .fotodlg__tiras b{ padding:16% 7% 40% }
+  .fotodlg--llena .fotodlg__tiras b{ padding:0 }
+  .fotodlg .alg{ margin-left:0; justify-content:flex-start }
+}
+@media (prefers-reduced-motion:reduce){
+  .fotodlg::backdrop, .fotodlg__marco, .fotodlg.abierto .fotodlg__marco, .fotodlg__tiras i, .fotodlg.lista .fotodlg__tiras i, .fotodlg__pie, .fotodlg.lista .fotodlg__pie{ transition:none }
+  .fotodlg__marco{ transform:none }
+}

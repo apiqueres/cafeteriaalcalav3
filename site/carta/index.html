@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Carta de Alcalá Cullera: desayunos, bocadillos, carnes y cócteles</title>
+<title>Cartas de Alcalá Cullera: carta general, desayunos, cafés, vinos, cervezas y cócteles</title>
 <meta name="description" content="La carta de Alcalá Cafetería Baristas en Cullera: desayunos y almuerzo valenciano, bocadillos, hamburguesas, ensaladas, carnes, pescados, carta vegana y sin gluten, postres y cócteles. Con precios y alérgenos.">
 <link rel="canonical" href="https://alcalacullera.com/carta/">
 <meta name="theme-color" content="#4A0F1D">
@@ -12,7 +12,7 @@
 <link rel="preload" href="../lib/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../lib/fonts/fuentes.css">
 <link rel="stylesheet" href="../css/base.css?v=13">
-<link rel="stylesheet" href="../css/carta.css?v=2">
+<link rel="stylesheet" href="../css/carta.css?v=3">
 </head>
 <body class="carta-pag">
 
@@ -61,15 +61,25 @@
   </div>
 </header>
 
+<!-- cabecera: carta.js cambia el título y el texto según la carta elegida (?c=…) -->
 <header class="carta__cab">
   <div class="caja">
     <p class="ceja">Alcalá · Cafetería Baristas · Cullera</p>
-    <h1 class="titular">La carta.</h1>
-    <p class="grande">Cocina abierta todo el día: desayuna a la hora de cenar o cena a la hora de desayunar. Precios con IVA incluido.</p>
-    <div class="carta__sellos"><span>Carta vegana</span><span>Sin gluten</span><span>Carta en braille</span><span>Menú infantil</span></div>
+    <h1 class="titular" id="cabTitulo">La carta.</h1>
+    <p class="grande" id="cabTexto">Cocina abierta todo el día: desayuna a la hora de cenar o cena a la hora de desayunar. Precios con IVA incluido.</p>
+    <div class="carta__sellos" id="cabSellos"><span>Carta vegana</span><span>Sin gluten</span><span>Carta en braille</span><span>Menú infantil</span></div>
+    <nav class="carta__otras" id="cabOtras" aria-label="Otras cartas" hidden></nav>
   </div>
 </header>
 
+<!-- selector: sin ?c= se elige una de las seis cartas (lo pinta carta.js desde window.CARTAS) -->
+<section class="elige" id="elige" aria-label="Elige una carta" hidden>
+  <div class="caja"><ul class="elige__lista" id="eligeLista"></ul></div>
+</section>
+<noscript><div class="caja" style="padding:2rem var(--lado)"><p>La carta necesita JavaScript para mostrarse. Si lo prefieres, llámanos al 961 72 50 98.</p></div></noscript>
+
+<!-- una carta: pestañas, platos y alérgenos -->
+<div id="vista" hidden>
 <div class="tabs" id="tabsWrap">
   <div class="caja tabs__in" id="tabs">
     <label class="buscar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input type="search" id="buscar" placeholder="Buscar un plato…" aria-label="Buscar en la carta"></label>
@@ -78,13 +88,29 @@
 
 <main id="cartaCont" aria-label="Carta"></main>
 
-<section class="leyenda" aria-labelledby="t-alg">
+<section class="leyenda" id="leyenda" aria-labelledby="t-alg">
   <div class="caja">
     <h2 class="titular t-m" id="t-alg">Alérgenos</h2>
     <ul id="leyendaLista"></ul>
     <p>La información de alérgenos se elabora con los datos de los proveedores. Por los procesos de elaboración no podemos excluir la presencia de trazas de otros alérgenos. Si eres celíaco, díselo al camarero: los platos sin gluten salen identificados con una banderita.</p>
   </div>
 </section>
+</div>
+
+<!-- foto de un plato: diálogo con la forma del logo; la foto llega en cinco tiras (CSS en carta.css, guion en carta.js) -->
+<dialog class="fotodlg" id="fotoDlg" aria-labelledby="fotoNom">
+  <div class="fotodlg__marco">
+    <div class="fotodlg__in">
+      <div class="fotodlg__tiras" id="fotoTiras" role="img" aria-label=""><i style="--n:0"><b></b></i><i style="--n:1"><b></b></i><i style="--n:2"><b></b></i><i style="--n:3"><b></b></i><i style="--n:4"><b></b></i></div>
+      <div class="fotodlg__pie">
+        <p class="fotodlg__cat" id="fotoCat"></p>
+        <h2 class="fotodlg__nom" id="fotoNom"></h2>
+        <div class="fotodlg__datos"><span class="fotodlg__precio" id="fotoPrecio"></span><span class="alg" id="fotoAlg"></span></div>
+      </div>
+    </div>
+    <button class="fotodlg__cerrar" id="fotoCerrar" type="button" aria-label="Cerrar la foto">✕</button>
+  </div>
+</dialog>
 
 <footer class="pie">
   <div class="caja">
@@ -122,13 +148,9 @@
   <a href="https://www.google.com/maps/dir/?api=1&destination=Cafeter%C3%ADa+Alcal%C3%A1,+C.+del+Pintor+Ferrer+Cabrera,+3,+46400+Cullera" target="_blank" rel="noopener" aria-label="Cómo llegar"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></a>
 </div>
 
-<script src="../js/carta-datos.js?v=1"></script>
-<script src="../js/carta.js?v=2"></script>
+<script src="../js/carta-datos.js?v=2"></script>
+<script src="../js/carta.js?v=3"></script>
 <script src="../lib/lenis.min.js" defer></script>
 <script src="../js/base.js?v=9" defer></script>
-<script>
-(function(){ var ul = document.getElementById('leyendaLista'); if(!ul) return;
-  ul.innerHTML = (window.ALERGENOS || []).map(function(a){ return '<li><span class="alg"><i><svg><use href="#alg-' + a.id + '"/></svg></i></span>' + a.n + '</li>'; }).join(''); })();
-</script>
 </body>
 </html>

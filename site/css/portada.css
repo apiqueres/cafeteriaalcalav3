@@ -61,6 +61,7 @@ html[data-escena="2"] .escenas__capa:nth-of-type(2), html[data-escena="3"] .esce
 .cartaDest__cab{ display:flex; align-items:flex-end; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; margin-bottom:clamp(1.4rem,3vw,2.4rem) }
 .cartaDest__cab p{ max-width:46ch; opacity:.9 }
 .categorias{ display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(.7rem,1.3vw,1.2rem) }
+@media (min-width:900px){ .categorias--cartas{ grid-template-columns:repeat(3,1fr) } .categorias--cartas .cat{ aspect-ratio:16/9 } }   /* las seis cartas: tres por fila */
 .cat{ position:relative; display:block; aspect-ratio:4/3; overflow:hidden; border-radius:var(--r-logo); background:var(--azulejo); box-shadow:var(--sombra-carta);
   clip-path:inset(12% 0 0); transition:transform .5s var(--lento), clip-path 1.1s var(--lento); transition-delay:0s, var(--d,0s) }   /* entra destapándose por arriba, 100 ms entre fotos */
 .in .cat{ clip-path:inset(0) }

@@ -31,7 +31,7 @@ window.CARTA = [
   /* ======================= carta general ======================= */
   { id:'hamburguesas', carta:'general', n:'Hamburguesas y tacos', foto:'hamburguesas', d:'Todas las hamburguesas se pueden acompañar con huevo o con queso de cabra, +1 €. Pan sin gluten, +1,20 €.', platos:[
     { n:'Taco Pulled Pork', p:'13,50', d:'Carne desmigada de cerdo, lechuga, tomate, aguacate, cilantro, salsa agria, queso fresco y pepinillos.', a:['gluten','crustaceos','huevos','pescado','soja','lacteos','apio','mostaza','sesamo','sulfitos','moluscos'], foto:'taco-pulled-pork', fotoMesa:true },
-    { n:'Taco Alcalá', p:'14,00', d:'Solomillo de pollo rebozado, lechuga, tomate, queso cheddar, cebolla, pimiento, salsa agria y salsa sweet chili (ligeramente picante).', a:['gluten','huevos','cacahuetes','soja','lacteos','mostaza','sesamo'], t:['picante'] },
+    { n:'Taco Alcalá', p:'14,00', d:'Solomillo de pollo rebozado, lechuga, tomate, queso cheddar, cebolla, pimiento, salsa agria y salsa sweet chili (ligeramente picante).', a:['gluten','huevos','cacahuetes','soja','lacteos','mostaza','sesamo'], t:['picante'], foto:'taco-alcala', fotoMesa:true },
     { n:'Burger de pollo', p:'12,35', d:'Hamburguesa de pollo de 180 g acompañada de tomate, ensalada, bacon y queso. Con guarnición de patatas fritas.', a:['gluten','huevos','soja','lacteos','sesamo','sulfitos'] },
     { n:'Burger de vacuno y cerdo', p:'12,50', d:'Hamburguesa de vacuno y cerdo de 140 g acompañada de tomate, ensalada, bacon y queso. Con guarnición de patatas fritas.', a:['gluten','huevos','soja','lacteos','sesamo','sulfitos'] },
     { n:'Burger de buey', p:'14,85', d:'Hamburguesa de buey de 250 g acompañada de tomate, ensalada, bacon y queso. Con guarnición de patatas fritas.', a:['gluten','huevos','soja','lacteos','sesamo','sulfitos'] },
@@ -39,9 +39,9 @@ window.CARTA = [
     { n:'Beyond Burger', p:'13,80', d:'La hamburguesa de Beyond Meat, creada directamente de las plantas. Complementos: patatas fritas 1,25 €, verduras a la plancha 2,50 €, láminas de boniato 1,60 €.', a:[], t:['singluten'], foto:'beyond', fotoMesa:true }
   ]},
   { id:'ensaladas', carta:'general', n:'Ensaladas y entrantes', foto:'ensaladas', d:'Para empezar o para compartir.', platos:[
-    { n:'Ensalada griega', p:'12,00', d:'Tomates, aceitunas negras, pimiento verde y rojo, cebolla y queso fresco sobre una mezcla de lechugas, aliñada con nuestra vinagreta griega.', a:['mostaza'] },
-    { n:'Ensalada César', p:'13,00', d:'Tomate cherry, queso parmesano, picatostes y pechuga rebozada. Con queso de cabra, +1 €.', a:['gluten','huevos','cacahuetes','lacteos','mostaza','sesamo'], foto:'ensalada-cesar' },
-    { n:'Ensalada especial', p:'12,45', d:'Lechuga, tomate, atún, huevo duro, pimiento asado y espárragos.', a:['huevos','pescado'], t:['singluten'] },
+    { n:'Ensalada griega', p:'12,00', d:'Tomates, aceitunas negras, pimiento verde y rojo, cebolla y queso fresco sobre una mezcla de lechugas, aliñada con nuestra vinagreta griega.', a:['mostaza'], foto:'ensalada-griega', fotoMesa:true },
+    { n:'Ensalada César', p:'13,00', d:'Tomate cherry, queso parmesano, picatostes y pechuga rebozada. Con queso de cabra, +1 €.', a:['gluten','huevos','cacahuetes','lacteos','mostaza','sesamo'], foto:'ensalada-cesar', fotoMesa:true },
+    { n:'Ensalada especial', p:'12,45', d:'Lechuga, tomate, atún, huevo duro, pimiento asado y espárragos.', a:['huevos','pescado'], t:['singluten'], foto:'ensalada-especial', fotoMesa:true },
     { n:'Ensalada temporada', p:'12,45', d:'Elaborada con hortalizas de temporada.', a:[] },
     { n:'Ensaladilla rusa', p:'9,50', a:['huevos','pescado','lacteos'] },
     { n:'Plato de jamón', p:'16,00', d:'100 g de jamón de bellota ibérico, 50 % raza ibérica.', a:[], t:['singluten'] },
@@ -79,8 +79,8 @@ window.CARTA = [
     { n:'Huevos rotos', p:'10,50', d:'Huevos rotos con jamón, chorizo y patatas.', a:['gluten','huevos','soja'], foto:'huevos-rotos' },
     { n:'Torreta semipicante de patatas', p:'9,60', d:'Torre de patatas caseras.', a:['gluten','huevos','soja','sulfitos'], t:['picante'], foto:'torreta-patatas' },
     { n:'Patatas Alcalá', p:'10,50', d:'Patatas fritas con beicon y queso fundido.', a:['gluten','huevos','soja','lacteos'] },
-    { n:'Patatas dipear', p:'9,50', d:'Patatas con variedad de salsas.', a:['gluten','huevos','soja','sulfitos'] },
-    { n:'Láminas de boniato', p:'7,95', d:'Láminas de boniato para picotear.', a:['gluten','huevos','soja','sulfitos'] },
+    { n:'Patatas dipear', p:'9,50', d:'Patatas con variedad de salsas.', a:['gluten','huevos','soja','sulfitos'], foto:'patatas-dipear', fotoMesa:true },
+    { n:'Láminas de boniato', p:'7,95', d:'Láminas de boniato para picotear.', a:['gluten','huevos','soja','sulfitos'], foto:'laminas-boniato', fotoMesa:true },
     { n:'Patatas bravas', p:'6,95', a:['gluten','mostaza'] },
     { n:'Cesta de patatas', p:'5,80', a:['gluten'] }
   ]},
@@ -89,7 +89,7 @@ window.CARTA = [
   ]},
   { id:'pastas', carta:'general', n:'Pastas', foto:'pastas', d:'Suplemento de queso en los spaghetti, +1 €.', platos:[
     { n:'Lasaña boloñesa', p:'8,80', a:['gluten','huevos','lacteos'], foto:'lasana-bolonesa' },
-    { n:'Spaghetti boloñesa', p:'9,00', a:['gluten','huevos','mostaza'], foto:'spaghetti-bolonesa' },
+    { n:'Spaghetti boloñesa', p:'9,00', a:['gluten','huevos','mostaza'], foto:'spaghetti-bolonesa', fotoMesa:true },
     { n:'Moussaka', p:'9,40', d:'Lasaña griega de berenjenas con mezcla de carnes de ternera, cerdo y ave, cebolla, tomate y un toque de salsa.', a:['gluten','soja','lacteos'] },
     { n:'Spaghetti carbonara', p:'8,70', a:['gluten','huevos','mostaza'] }
   ]},
@@ -100,10 +100,10 @@ window.CARTA = [
     { n:'Brochetas de pollo', p:'13,30', d:'Acompañadas de patata hervida.', a:[], t:['singluten'] },
     { n:'Costillas barbacoa', p:'18,40', p2:'14,80', e2:'Media ración', d:'Acompañadas de patata hervida. Ración completa.', a:[] },
     { n:'Carrillera de cerdo', p:'15,40', d:'Acompañada de patata hervida.', a:[] },
-    { n:'Pollo con curry y arroz', p:'13,50', a:['gluten','lacteos','mostaza'] },
+    { n:'Pollo con curry y arroz', p:'13,50', a:['gluten','lacteos','mostaza'], foto:'pollo-curry', fotoMesa:true },
     { n:'Alitas de pollo', p:'7,80', d:'Alitas de pollo a la barbacoa.', a:['gluten','soja'] },
     { n:'Cordero', p:'19,20', d:'Acompañado de patata hervida.', a:[], foto:'cordero', fotoMesa:true },
-    { n:'Nuggets', p:'11,00', d:'De solomillo de pollo, caseros.', a:['gluten','huevos'] },
+    { n:'Nuggets', p:'11,00', d:'De solomillo de pollo, caseros.', a:['gluten','huevos'], foto:'nuggets', fotoMesa:true },
     { n:'Rabo de toro', p:'16,10', d:'Acompañado de arroz.', a:['gluten','soja','lacteos','sulfitos'] },
     { n:'Pechuga de pollo', p:'11,30', d:'Empanada. Acompañada con pasta y patatas fritas.', a:['gluten','huevos','lacteos'] },
     { n:'Secreto ibérico', p:'13,00', d:'Acompañado de salsa chimichurri (mezcla de pimiento, ajo, cebolla…).', a:[] }
@@ -112,7 +112,7 @@ window.CARTA = [
     { n:'Calamar entero', p:'13,00', a:['gluten','huevos','pescado'] },
     { n:'Pulpo a la gallega', p:'21,00', a:['pescado'], foto:'pulpo-gallega', fotoLlena:true },
     { n:'Tostada de ahumados', p:'7,50', a:['gluten','huevos','pescado'] },
-    { n:'Bacalao con tomate', p:'15,40', d:'Acompañado de patata hervida.', a:['pescado'], t:['singluten'] },
+    { n:'Bacalao con tomate', p:'15,40', d:'Acompañado de patata hervida.', a:['pescado'], t:['singluten'], foto:'bacalao', fotoMesa:true },
     { n:'Sepia', p:'13,75', a:['pescado'] },
     { n:'Emperador', p:'14,95', a:['gluten','pescado'] },
     { n:'Calamares a la romana', p:'11,00', a:['gluten','huevos','pescado'], foto:'calamares-romana' },
@@ -125,22 +125,22 @@ window.CARTA = [
     { n:'Bowl Alcalá', p:'7,10', d:'Yogur griego con frutas de temporada y muesli.', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'] },
     { n:'Helado de leche merengada', p:'4,90', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'] },
     { n:'Tarta Tatín', p:'5,30', d:'Tarta de manzana caliente con helado de vainilla.', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'] },
-    { n:'Tarta 3 chocolates', p:'5,30', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'] },
-    { n:'Tarta de queso', p:'5,50', d:'Con frutos rojos.', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'] },
-    { n:'Tortitas con miel', p:'5,30', d:'Con chocolate o con caramelo, +0,50 €.', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'] }
+    { n:'Tarta 3 chocolates', p:'5,30', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'], foto:'tarta-3-chocolates', fotoMesa:true },
+    { n:'Tarta de queso', p:'5,50', d:'Con frutos rojos.', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'], foto:'tarta-queso', fotoMesa:true },
+    { n:'Tortitas con miel', p:'5,30', d:'Con chocolate o con caramelo, +0,50 €.', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'], foto:'tortitas', fotoMesa:true }
   ]},
   { id:'vegana', carta:'general', n:'Carta vegana', foto:'vegana', d:'Entrantes, ensaladas, principales y postres sin productos de origen animal.', platos:[
-    { n:'Láminas de boniato', p:'7,95', d:'Boniatos dulces cortados en finas láminas, dorados y con un ligero toque de sal.', a:[], t:['vegano'] },
-    { n:'Peruvian Salad', p:'11,50', d:'Nuestra ensalada más fresca: quinoa cocida, pimiento verde y rojo, garbanzos, maíz dulce, nueces y pasas, aromatizada con aceite de oliva y nuestra vinagreta especial. Los ingredientes pueden variar según la temporada.', a:['cacahuetes','soja','cascara','mostaza'], t:['vegano'] },
+    { n:'Láminas de boniato', p:'7,95', d:'Boniatos dulces cortados en finas láminas, dorados y con un ligero toque de sal.', a:[], t:['vegano'], foto:'laminas-boniato', fotoMesa:true },
+    { n:'Peruvian Salad', p:'11,50', d:'Nuestra ensalada más fresca: quinoa cocida, pimiento verde y rojo, garbanzos, maíz dulce, nueces y pasas, aromatizada con aceite de oliva y nuestra vinagreta especial. Los ingredientes pueden variar según la temporada.', a:['cacahuetes','soja','cascara','mostaza'], t:['vegano'], foto:'peruvian-salad', fotoMesa:true },
     { n:'Season Green Salad', p:'11,95', d:'Ensalada de hortalizas y verduras de temporada, frescas y preparadas al momento, acompañadas de vuna (atún vegano).', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'] },
     { n:'Nuggets veganos', p:'7,25', d:'Nuestra versión vegana de un clásico: crujientes y con todo el sabor, a partir de proteínas vegetales de soja y trigo.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'nuggets-veganos' },
-    { n:'Hamburguesa Penélope', p:'9,50', d:'Nuestra hamburguesa vegana, servida con pan especial de semillas, tomate, cebolla y pepinillos, con un toque de mostaza. Acompañada de nuestra patata asada.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'hamburguesa-penelope' },
-    { n:'Sándwich Pitágoras', p:'9,85', d:'Pan con semillas, tofu, brotes verdes, espinacas, láminas de tomate y aguacate. Puedes acompañarlo con nuestras patatas.', a:['gluten','cascara','sesamo'], t:['vegano'] },
+    { n:'Hamburguesa Penélope', p:'9,50', d:'Nuestra hamburguesa vegana, servida con pan especial de semillas, tomate, cebolla y pepinillos, con un toque de mostaza. Acompañada de nuestra patata asada.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'hamburguesa-penelope', fotoMesa:true },
+    { n:'Sándwich Pitágoras', p:'9,85', d:'Pan con semillas, tofu, brotes verdes, espinacas, láminas de tomate y aguacate. Puedes acompañarlo con nuestras patatas.', a:['gluten','cascara','sesamo'], t:['vegano'], foto:'pitagoras', fotoMesa:true },
     { n:'Falafel', p:'7,85', d:'Albóndigas especiadas de garbanzos y remolacha, para comer solas o como acompañantes.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'falafel' },
     { n:'Salteado vegano de pollo', p:'10,50', d:'Salteado con todo el sabor del pollo y nuestras verduras frescas, pero totalmente vegano.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'salteado-vegano' },
     { n:'Bocadillo de pollo vegano', p:'7,10', d:'Pollo empanado crujiente, lechuga, tomate, pan y mayonesa, pero totalmente vegano.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'bocadillo-pollo-vegano' },
     { n:'Batido Natalie Portman', p:'7,30', d:'Green Detox Smoothie: manzana, pepino, apio, espinacas, jengibre y zumo de naranja.', a:['apio'], t:['vegano'] },
-    { n:'Season Fruits Salad', p:'7,90', d:'Ensalada de frutas de temporada, frescas y preparadas al momento, acompañada de zumo natural.', a:[], t:['vegano'] }
+    { n:'Season Fruits Salad', p:'7,90', d:'Ensalada de frutas de temporada, frescas y preparadas al momento, acompañada de zumo natural.', a:[], t:['vegano'], foto:'bol-frutas', fotoMesa:true }
   ]},
 
   /* ======================= desayunos ======================= */
@@ -151,14 +151,14 @@ window.CARTA = [
   { id:'especialidades', carta:'desayunos', n:'Desayunos', foto:'', d:'Suplemento de pan sin gluten, +1,20 €.', platos:[
     { n:'Tostada rústica', p:'4,90', d:'Pan de pueblo con tomate valenciano, jamón serrano ibérico, albahaca y aceite virgen extra.', a:[], foto:'tostada-rustica' },
     { n:'Tostada Merrick', p:'5,90', d:'Recomendación desde Kentucky: pan de semilla, aguacate, huevo revuelto y bacon horneado a 140 grados con semillas de cereales y paprika.', a:[], t:['reco'], foto:'tostada-merrick' },
-    { n:'Açaí Bowl', p:'8,50', d:'Açaí, arándanos, coco, fresas, plátano, granola y salsa de pistacho. Las frutas pueden variar según temporada.', a:[], foto:'acai-bowl' },
+    { n:'Açaí Bowl', p:'8,50', d:'Açaí, arándanos, coco, fresas, plátano, granola y salsa de pistacho. Las frutas pueden variar según temporada.', a:[], foto:'acai-bowl', fotoMesa:true },
     { n:'Bowl Alcalá', p:'8,00', d:'Yogur griego con fruta de temporada y muesli.', a:[] },
-    { n:'Bol de frutas de temporada', p:'7,90', d:'Variedad de frutas de temporada cortadas al momento.', a:[] },
+    { n:'Bol de frutas de temporada', p:'7,90', d:'Variedad de frutas de temporada cortadas al momento.', a:[], foto:'bol-frutas', fotoMesa:true },
     { n:'Huevos Benedict', p:'7,70', d:'Huevos pochados con jamón serrano bañados en una cremosa salsa holandesa sobre pan tierno y un toque de perejil.', a:[] },
-    { n:'Huevos Benedict al estilo noruego', p:'7,85', d:'Huevos pochados con salmón ahumado bañados en una cremosa salsa holandesa sobre pan tierno y un toque de perejil.', a:[] },
-    { n:'English Breakfast', p:'9,50', d:'Clásico desayuno inglés: huevos fritos o revueltos con bacon ahumado, judías, champiñones, tomate a la plancha, longaniza y 2 rebanadas de pan de molde recién tostado.', a:[] },
-    { n:'Aguacate toast', p:'6,90', d:'Tostadas de aguacate en pan de cereales con huevo revuelto, queso y tomate seco.', a:[] },
-    { n:'Tortitas con miel y nata', p:'5,90', d:'Tortitas americanas de tres pisos servidas con nata y miel.', a:[] },
+    { n:'Huevos Benedict al estilo noruego', p:'7,85', d:'Huevos pochados con salmón ahumado bañados en una cremosa salsa holandesa sobre pan tierno y un toque de perejil.', a:[], foto:'huevos-benedict', fotoMesa:true },
+    { n:'English Breakfast', p:'9,50', d:'Clásico desayuno inglés: huevos fritos o revueltos con bacon ahumado, judías, champiñones, tomate a la plancha, longaniza y 2 rebanadas de pan de molde recién tostado.', a:[], foto:'english-breakfast', fotoMesa:true },
+    { n:'Aguacate toast', p:'6,90', d:'Tostadas de aguacate en pan de cereales con huevo revuelto, queso y tomate seco.', a:[], foto:'aguacate-toast', fotoMesa:true },
+    { n:'Tortitas con miel y nata', p:'5,90', d:'Tortitas americanas de tres pisos servidas con nata y miel.', a:[], foto:'tortitas', fotoMesa:true },
     { n:'Desayuno vegano', p:'7,20', d:'Café y tostada de pan de cereales con lechuga, tomate, láminas de aguacate y tofu.', a:[], t:['vegano'] },
     { n:'Desayuno sin gluten dulce', p:'6,35', d:'Café y fajita de maíz (sin gluten) rellena de frutos secos, miel y plátano.', a:[], t:['singluten'] },
     { n:'Desayuno sin gluten salado', p:'6,70', d:'Café y fajita de maíz (sin gluten) con aguacate, huevos revueltos, queso y tomate seco.', a:[], t:['singluten'] },

@@ -6,11 +6,11 @@ Las que vienen sobre fondo blanco (croquetas) pasan el blanco a transparente."""
 import sys, os
 from PIL import Image, ImageChops
 ORIGEN = {
-  'ensalada-cesar': 'gen-p04-0', 'chivito': 'gen-p05-0', 'sandwich-primavera': 'gen-p06-0', 'sandwich-alcala': 'gen-p06-1',
-  'huevos-rotos': 'gen-p07-0', 'torreta-patatas': 'gen-p07-1', 'spaghetti-bolonesa': 'gen-p09-0', 'lasana-bolonesa': 'gen-p09-1',
+  'chivito': 'gen-p05-0', 'sandwich-primavera': 'gen-p06-0', 'sandwich-alcala': 'gen-p06-1',
+  'huevos-rotos': 'gen-p07-0', 'torreta-patatas': 'gen-p07-1', 'lasana-bolonesa': 'gen-p09-1',
   'croquetas': 'gen-p10-1', 'calamares-romana': 'gen-p11-0', 'pulpo-gallega': 'gen-p11-1', 'torrija': 'gen-p12-0', 'flan': 'gen-p12-1',
-  'nuggets-veganos': 'gen-p14-2', 'falafel': 'gen-p15-1', 'hamburguesa-penelope': 'gen-p15-2', 'salteado-vegano': 'gen-p16-1', 'bocadillo-pollo-vegano': 'gen-p16-2',
-  'batido-amix': 'des-p01-2', 'tostada-rustica': 'des-p01-3', 'tostada-merrick': 'des-p02-1', 'acai-bowl': 'des-p02-2' }
+  'nuggets-veganos': 'gen-p14-2', 'falafel': 'gen-p15-1', 'salteado-vegano': 'gen-p16-1', 'bocadillo-pollo-vegano': 'gen-p16-2',
+  'batido-amix': 'des-p01-2', 'tostada-rustica': 'des-p01-3', 'tostada-merrick': 'des-p02-1' }
 def blanco_a_alfa(im):
     im = im.convert('RGB'); r, g, b = im.split()
     minimo = ImageChops.darker(ImageChops.darker(r, g), b)

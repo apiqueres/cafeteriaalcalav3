@@ -149,6 +149,9 @@ body.carta-pag::before{ content:""; position:fixed; inset:0; z-index:-1; backgro
 .fotodlg__tiras b{ position:absolute; left:0; top:calc(var(--n,0) * -1 * (100% - 1px)); width:100%; height:calc(500% - 5px); padding:6% 9% 23%;
   background:var(--foto) center / contain no-repeat content-box, radial-gradient(120% 90% at 50% 36%, #FDFCF8 0%, var(--hueso) 56%, var(--hueso-3) 100%) }
 .fotodlg--llena .fotodlg__tiras b{ padding:0; background:var(--foto) center / cover no-repeat, radial-gradient(120% 90% at 50% 36%, #FDFCF8 0%, var(--hueso) 56%, var(--hueso-3) 100%) }
+/* foto del plato en la mesa con los azulejos detrás (cuadrada): llena el marco enseñando la parte de abajo, que es
+   mesa oscura y es donde cae el nombre */
+.fotodlg--mesa .fotodlg__tiras b{ padding:0; background:var(--foto) center 82% / cover no-repeat, var(--burdeos-2) }
 .fotodlg.lista .fotodlg__tiras i{ transform:none; transition-duration:.735s; transition-delay:calc(.14s + var(--n,0) * 65ms) }
 .fotodlg__pie{ position:absolute; z-index:2; inset:auto 0 0 0; display:grid; gap:.35rem; padding:clamp(2.8rem,9vw,5.2rem) clamp(1.1rem,3.2vw,2.1rem) clamp(1rem,2.4vw,1.6rem);
   background:linear-gradient(180deg, rgba(74,15,29,0), rgba(74,15,29,.88) 48%, var(--burdeos-2)); opacity:0; transform:translateY(16px); transition:opacity .25s ease, transform .25s ease }
@@ -168,6 +171,7 @@ body.carta-pag::before{ content:""; position:fixed; inset:0; z-index:-1; backgro
   .fotodlg__marco{ aspect-ratio:4/5 }
   .fotodlg__tiras b{ padding:16% 7% 40% }
   .fotodlg--llena .fotodlg__tiras b{ padding:0 }
+  .fotodlg--mesa .fotodlg__tiras b{ padding:0; background:var(--foto) center top / 100% auto no-repeat, var(--burdeos-2) }   /* en móvil el marco es más alto que la foto: se ve entera arriba y el nombre queda debajo */
   .fotodlg .alg{ margin-left:0; justify-content:flex-start }
 }
 @media (prefers-reduced-motion:reduce){

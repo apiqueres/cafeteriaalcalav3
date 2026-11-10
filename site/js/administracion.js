@@ -13,7 +13,7 @@
     var cats = [], platos = [], n = 1;
     (window.CARTA || []).forEach(function(c, i){
       cats.push({ id: c.id, carta: c.carta || 'general', n: c.n, d: c.d || '', foto: c.foto || '', visible: true, orden: i });
-      c.platos.forEach(function(p, j){ platos.push({ id: 'p' + (n++), cat: c.id, n: p.n, d: p.d || '', p: p.p, e: p.e || '', p2: p.p2 || '', e2: p.e2 || '', a: (p.a || []).slice(), t: (p.t || []).slice(), foto: p.foto || '', fotoLlena: !!p.fotoLlena, visible: true, orden: j, trad: {} }); });
+      c.platos.forEach(function(p, j){ platos.push({ id: 'p' + (n++), cat: c.id, n: p.n, d: p.d || '', p: p.p, e: p.e || '', p2: p.p2 || '', e2: p.e2 || '', a: (p.a || []).slice(), t: (p.t || []).slice(), foto: p.foto || '', fotoLlena: !!p.fotoLlena, fotoMesa: !!p.fotoMesa, visible: true, orden: j, trad: {} }); });
     });
     return { categorias: cats, platos: platos,
       local: { horario: DIAS.map(function(d){ return { d: d, abre: d === 'Jueves' ? '' : '9:00', cierra: d === 'Jueves' ? '' : '23:00', cerrado: d === 'Jueves' }; }),

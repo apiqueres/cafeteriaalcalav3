@@ -6,7 +6,8 @@
    ETIQUETAS: «nuevo» donde el PDF lo marca, «vegano» en la carta vegana, «sin gluten» en la selección de la página
    «Carta sin gluten» y «picante» donde el nombre o la descripción lo dicen.
    FOTOS de plato (foto:'…' → media/carta/platos/….webp): las que vienen dentro de los PDF, recortadas; fotoLlena
-   marca las que no son un recorte y llenan el marco.
+   marca las que no son un recorte y llenan el marco. fotoMesa marca las fotos reales del cliente llevadas a una mesa
+   oscura con el fondo de azulejos azules (cuadradas, 1400 px; originales en imagenes/platos-mesa).
    Precio: p es el principal (e dice de qué: botella, doble…), p2 el segundo (e2 dice de qué: copa, media ración…).
    CARTAS dice qué cartas hay; cada categoría de CARTA dice a cuál pertenece (carta:'…').
    Cuando exista el panel con servidor, este fichero lo generará el servidor desde la base de datos. */
@@ -29,13 +30,13 @@ window.CARTAS = [
 window.CARTA = [
   /* ======================= carta general ======================= */
   { id:'hamburguesas', carta:'general', n:'Hamburguesas y tacos', foto:'hamburguesas', d:'Todas las hamburguesas se pueden acompañar con huevo o con queso de cabra, +1 €. Pan sin gluten, +1,20 €.', platos:[
-    { n:'Taco Pulled Pork', p:'13,50', d:'Carne desmigada de cerdo, lechuga, tomate, aguacate, cilantro, salsa agria, queso fresco y pepinillos.', a:['gluten','crustaceos','huevos','pescado','soja','lacteos','apio','mostaza','sesamo','sulfitos','moluscos'] },
+    { n:'Taco Pulled Pork', p:'13,50', d:'Carne desmigada de cerdo, lechuga, tomate, aguacate, cilantro, salsa agria, queso fresco y pepinillos.', a:['gluten','crustaceos','huevos','pescado','soja','lacteos','apio','mostaza','sesamo','sulfitos','moluscos'], foto:'taco-pulled-pork', fotoMesa:true },
     { n:'Taco Alcalá', p:'14,00', d:'Solomillo de pollo rebozado, lechuga, tomate, queso cheddar, cebolla, pimiento, salsa agria y salsa sweet chili (ligeramente picante).', a:['gluten','huevos','cacahuetes','soja','lacteos','mostaza','sesamo'], t:['picante'] },
     { n:'Burger de pollo', p:'12,35', d:'Hamburguesa de pollo de 180 g acompañada de tomate, ensalada, bacon y queso. Con guarnición de patatas fritas.', a:['gluten','huevos','soja','lacteos','sesamo','sulfitos'] },
     { n:'Burger de vacuno y cerdo', p:'12,50', d:'Hamburguesa de vacuno y cerdo de 140 g acompañada de tomate, ensalada, bacon y queso. Con guarnición de patatas fritas.', a:['gluten','huevos','soja','lacteos','sesamo','sulfitos'] },
     { n:'Burger de buey', p:'14,85', d:'Hamburguesa de buey de 250 g acompañada de tomate, ensalada, bacon y queso. Con guarnición de patatas fritas.', a:['gluten','huevos','soja','lacteos','sesamo','sulfitos'] },
     { n:'Burger Pulled Pork', p:'13,50', d:'Carne desmigada de cerdo acompañada de tomate, ensalada, bacon y queso. Con guarnición de patatas fritas.', a:['gluten','huevos','soja','lacteos','sesamo','sulfitos'] },
-    { n:'Beyond Burger', p:'13,80', d:'La hamburguesa de Beyond Meat, creada directamente de las plantas. Complementos: patatas fritas 1,25 €, verduras a la plancha 2,50 €, láminas de boniato 1,60 €.', a:[], t:['singluten'], foto:'beyond', fotoLlena:true }
+    { n:'Beyond Burger', p:'13,80', d:'La hamburguesa de Beyond Meat, creada directamente de las plantas. Complementos: patatas fritas 1,25 €, verduras a la plancha 2,50 €, láminas de boniato 1,60 €.', a:[], t:['singluten'], foto:'beyond', fotoMesa:true }
   ]},
   { id:'ensaladas', carta:'general', n:'Ensaladas y entrantes', foto:'ensaladas', d:'Para empezar o para compartir.', platos:[
     { n:'Ensalada griega', p:'12,00', d:'Tomates, aceitunas negras, pimiento verde y rojo, cebolla y queso fresco sobre una mezcla de lechugas, aliñada con nuestra vinagreta griega.', a:['mostaza'] },
@@ -101,7 +102,7 @@ window.CARTA = [
     { n:'Carrillera de cerdo', p:'15,40', d:'Acompañada de patata hervida.', a:[] },
     { n:'Pollo con curry y arroz', p:'13,50', a:['gluten','lacteos','mostaza'] },
     { n:'Alitas de pollo', p:'7,80', d:'Alitas de pollo a la barbacoa.', a:['gluten','soja'] },
-    { n:'Cordero', p:'19,20', d:'Acompañado de patata hervida.', a:[], foto:'cordero' },
+    { n:'Cordero', p:'19,20', d:'Acompañado de patata hervida.', a:[], foto:'cordero', fotoMesa:true },
     { n:'Nuggets', p:'11,00', d:'De solomillo de pollo, caseros.', a:['gluten','huevos'] },
     { n:'Rabo de toro', p:'16,10', d:'Acompañado de arroz.', a:['gluten','soja','lacteos','sulfitos'] },
     { n:'Pechuga de pollo', p:'11,30', d:'Empanada. Acompañada con pasta y patatas fritas.', a:['gluten','huevos','lacteos'] },

@@ -132,7 +132,7 @@
   function abrir(i, boton){
     var x = PLATOS[i]; if(!x) return; var p = x.p, src = '../media/carta/platos/' + p.foto + '.webp';
     clearTimeout(cerrando); vuelve = boton || null;
-    dlg.classList.remove('abierto', 'lista'); dlg.classList.toggle('fotodlg--llena', !!p.fotoLlena);
+    dlg.classList.remove('abierto', 'lista'); dlg.classList.toggle('fotodlg--llena', !!p.fotoLlena); dlg.classList.toggle('fotodlg--mesa', !!p.fotoMesa);
     tiras.style.setProperty('--foto', 'url("' + src + '")'); tiras.setAttribute('aria-label', 'Foto de ' + p.n);
     el('fotoCat').textContent = x.c.n; el('fotoNom').textContent = p.n;
     el('fotoPrecio').textContent = p.p + ' €' + (p.e ? ' · ' + p.e : '');

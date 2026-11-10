@@ -17,7 +17,7 @@ img{ display:block }
 .barra span{ opacity:.8 }
 .barra .sep{ flex:1 }
 .barra a{ color:var(--oro-claro) }
-.barra button{ font:700 .8rem/1 'Manrope',system-ui,sans-serif; letter-spacing:.1em; text-transform:uppercase; padding:.7rem 1.2rem; border-radius:999px; border:0; background:var(--oro); color:var(--burdeos-2); cursor:pointer }
+.barra button{ font:700 .8rem/1 'Manrope',system-ui,sans-serif; letter-spacing:.1em; text-transform:uppercase; padding:.7rem 1.2rem; border-radius:0 12px 0 12px; border:0; background:var(--oro); color:var(--burdeos-2); cursor:pointer }
 .barra button:hover{ background:var(--oro-claro) }
 
 /* páginas */
@@ -83,7 +83,7 @@ img{ display:block }
 .v-web .cat__cab{ position:relative; display:grid; grid-template-columns:minmax(0,1fr) 62mm; gap:8mm; align-items:end; padding:18mm 16mm 0 }
 .v-web .cat__cab h2{ font-family:'Fraunces',Georgia,serif; font-weight:700; font-size:13mm; line-height:1.04; letter-spacing:-.01em; color:var(--burdeos); font-variation-settings:"SOFT" 100,"opsz" 72 }
 .v-web .cat__cab p{ font-size:3.7mm; line-height:1.5; opacity:.85; margin-top:2.5mm; max-width:100mm }
-.v-web .cat__foto{ width:62mm; height:46.5mm; object-fit:cover; border-radius:16px 0 16px 0; box-shadow:0 10mm 14mm -8mm rgba(28,24,24,.5), 0 0 0 .4mm rgba(184,146,79,.5) }
+.v-web .cat__foto{ width:62mm; height:46.5mm; object-fit:cover; border-radius:0 16px 0 16px; box-shadow:0 10mm 14mm -8mm rgba(28,24,24,.5), 0 0 0 .4mm rgba(184,146,79,.5) }
 .v-web .platos{ position:relative; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 10mm; padding:8mm 16mm 22mm }
 .v-web .plato{ padding:4.2mm 0; border-bottom:.3mm dashed var(--hueso-3) }
 .v-web .plato__cab{ display:flex; justify-content:space-between; align-items:baseline; gap:4mm }

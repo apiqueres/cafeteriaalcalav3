@@ -11,9 +11,10 @@
   --azulejo:#5E7B8A; --azulejo-2:#3E5663; --azulejo-3:#7E9AA8;
   --terracota:#C7703F; --carbon:#1C1818; --carbon-2:#3A3333;
 
-  --r-logo:28px 0 28px 0;        /* esquinas del logo: arriba-izq y abajo-der */
-  --r-logo-s:16px 0 16px 0;
-  --r-boton:999px;
+  --r-logo:0 28px 0 28px;        /* esquinas del logo: redondas arriba-der y abajo-izq, rectas las otras dos */
+  --r-logo-s:0 16px 0 16px;
+  --r-boton:0 1rem 0 1rem;       /* botones con el mismo acabado que el logo (antes píldora: 999px) */
+  --r-boton-s:0 .7rem 0 .7rem;   /* lo mismo para chips y botones pequeños */
   --r-lamina:32px;
 
   --lado:clamp(1.2rem,4.2vw,4.5rem);
@@ -265,7 +266,7 @@ p b{ font-weight:700 }
 .foto.in{ clip-path:inset(0) }
 .foto img{ width:100%; height:100%; object-fit:cover; transform:translateY(calc((var(--entra,1) - 1) * -6%)) scale(1.08); transition:transform .1s linear }
 .foto--arco{ border-radius:999px 999px var(--r-logo-s) var(--r-logo-s) }
-.foto--arco{ border-radius:50% 50% 16px 0 / 40% 40% 16px 0 }
+.foto--arco{ border-radius:50% 50% 0 16px / 40% 40% 0 16px }
 .marco-oro{ box-shadow:var(--sombra-carta), inset 0 0 0 1.5px rgba(184,146,79,.5) }
 
 /* escritorio: láminas apiladas, se encogen al quedar tapadas */
@@ -309,7 +310,7 @@ p b{ font-weight:700 }
 
 /* ====================== flotante de móvil ====================== */
 .flotante{ position:fixed; z-index:90; right:1rem; bottom:1rem; display:none; gap:.5rem }
-.flotante a{ width:52px; height:52px; border-radius:50%; display:grid; place-items:center; background:var(--oro); color:var(--burdeos-2); box-shadow:0 10px 24px -8px rgba(0,0,0,.5) }
+.flotante a{ width:52px; height:52px; border-radius:0 18px 0 18px; display:grid; place-items:center; background:var(--oro); color:var(--burdeos-2); box-shadow:0 10px 24px -8px rgba(0,0,0,.5) }
 .flotante svg{ width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round }
 
 /* ====================== móvil ====================== */

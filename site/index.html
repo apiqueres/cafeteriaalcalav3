@@ -24,8 +24,8 @@
 (function(){ try{ var h = document.documentElement, t = +sessionStorage.getItem('llegada'); sessionStorage.removeItem('llegada');
   if(t && Date.now() - t < 4000) h.className += ' llegada';
   else if(sessionStorage.getItem('telon') === '1' || location.hash || matchMedia('(prefers-reduced-motion: reduce)').matches) h.className += ' sin-telon'; }catch(e){} })();</script>
-<link rel="stylesheet" href="css/base.css?v=16">
-<link rel="stylesheet" href="css/portada.css?v=17">
+<link rel="stylesheet" href="css/base.css?v=17">
+<link rel="stylesheet" href="css/portada.css?v=18">
 <link rel="preload" href="media/logo.svg" as="image">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[

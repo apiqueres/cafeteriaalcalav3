@@ -25,8 +25,22 @@
   if(t && Date.now() - t < 4000) h.className += ' llegada';
   else if(sessionStorage.getItem('telon') === '1' || location.hash || matchMedia('(prefers-reduced-motion: reduce)').matches) h.className += ' sin-telon'; }catch(e){} })();</script>
 <link rel="stylesheet" href="css/base.css?v=17">
-<link rel="stylesheet" href="css/portada.css?v=18">
+<link rel="stylesheet" href="css/portada.css?v=19">
 <link rel="preload" href="media/logo.svg" as="image">
+<script>/* Escena del día: la portada enseña UNA de las tres fotos del logo y va rotando. MODO 'dia' cambia de foto cada
+   día (a medianoche, hora del visitante); MODO 'franja' la elige por la hora: café con leche por la mañana, azulejos
+   burdeos a mediodía y por la tarde, azulejos azules por la noche. ?escena=1|2|3 fuerza una para revisarla.
+   Deja el número en <html data-escena> (el CSS enseña sólo esa capa) y precarga su foto para que no tarde. */
+(function(){ var MODO = 'dia', N = 3, h = document.documentElement, d = new Date(), n;
+  var q = /[?&]escena=([1-3])(?:&|$)/.exec(location.search);
+  if(q) n = +q[1];
+  else if(MODO === 'franja'){ var hh = d.getHours(); n = hh >= 6 && hh < 12 ? 2 : hh >= 12 && hh < 20 ? 1 : 3; }
+  else n = Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000) % N + 1;
+  h.setAttribute('data-escena', n);
+  [['(orientation: portrait)', 'v-800.webp 800w, media/escenas/escena-' + n + '-v-1280.webp 1280w', 'v-800'], ['(orientation: landscape)', 'h-1280.webp 1280w, media/escenas/escena-' + n + '-h-2048.webp 2048w', 'h-1280']].forEach(function(m){
+    var l = document.createElement('link'); l.rel = 'preload'; l.as = 'image'; l.media = m[0]; l.href = 'media/escenas/escena-' + n + '-' + m[2] + '.webp';
+    l.setAttribute('imagesrcset', 'media/escenas/escena-' + n + '-' + m[1]); l.setAttribute('imagesizes', '100vw'); l.setAttribute('fetchpriority', 'high'); document.head.appendChild(l); });
+})();</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
  {"@type":"WebSite","@id":"https://alcalacullera.com/#web","url":"https://alcalacullera.com/","name":"Alcalá Cafetería Baristas","inLanguage":"es"},
@@ -82,14 +96,14 @@
   </div>
 </header>
 
-<!-- escenas: al entrar, sólo el logo en el local (azulejos burdeos); al bajar, el logo aparece en otros rincones y
-     productos de la cafetería, siempre centrado. Tres fotos generadas (originales en imagenes/escenas-logo); la
-     sección es alta y el escenario queda fijo mientras las capas se funden (portada.js escribe --escena, 0 → 2). -->
+<!-- escena: la primera pantalla es sólo el logo en el local, siempre centrado. Hay tres fotos generadas (originales en
+     imagenes/escenas-logo) y se enseña UNA, que va rotando por día (guion «escena del día» de la cabecera, que pone
+     <html data-escena>). Las tres van con carga diferida: las que no tocan no se descargan. Sin JS se ve la primera. -->
 <section class="escenas" id="inicio" aria-label="Alcalá en el local">
   <div class="escenas__fijo">
     <picture class="escenas__capa" style="--i:1">
       <source media="(orientation: portrait)" srcset="media/escenas/escena-1-v-800.webp 800w, media/escenas/escena-1-v-1280.webp 1280w" sizes="100vw">
-      <img src="media/escenas/escena-1-h-1280.webp" srcset="media/escenas/escena-1-h-1280.webp 1280w, media/escenas/escena-1-h-2048.webp 2048w" sizes="100vw" alt="Logo en latón sobre azulejos burdeos" width="2048" height="1158" fetchpriority="high">
+      <img src="media/escenas/escena-1-h-1280.webp" srcset="media/escenas/escena-1-h-1280.webp 1280w, media/escenas/escena-1-h-2048.webp 2048w" sizes="100vw" alt="Logo en latón sobre azulejos burdeos" width="2048" height="1158" loading="lazy">
     </picture>
     <picture class="escenas__capa" style="--i:2">
       <source media="(orientation: portrait)" srcset="media/escenas/escena-2-v-800.webp 800w, media/escenas/escena-2-v-1280.webp 1280w" sizes="100vw">
@@ -303,6 +317,6 @@ window.CLIPS = [1,2,3,4,5,6,7,8,9].map(function(i){ return { video: 'media/reels
 </script>
 <script src="lib/lenis.min.js" defer></script>
 <script src="js/base.js?v=12" defer></script>
-<script src="js/portada.js?v=9" defer></script>
+<script src="js/portada.js?v=10" defer></script>
 </body>
 </html>

@@ -38,29 +38,26 @@
   } else vids.forEach(play);
 })();
 
-/* ---------- escenas: --escena (0 → n−1) según el scroll ----------
-   La sección .escenas es alta y su escenario queda fijo; el progreso es (scroll dentro de la sección) / (un paso
-   por escena) y se escribe tal cual en la sección como --escena (sin suavizar: el corte sigue a la rueda). Sólo
-   quedan visibles la escena actual y la que entra (clase .viva), para que el navegador no componga siete fotos a
-   pantalla completa a la vez. También escribe --hero-travel en <html> (0 → 1 en la última pantalla de la sección)
-   para el arco, en navegadores sin animation-timeline. */
+/* ---------- escena: --escena (0 → 1) mientras la primera pantalla se va ----------
+   La portada enseña una sola foto (la elige el guion de la cabecera de index.html). Aquí sólo se escribe en la
+   sección cuánto se ha ido ya (--escena, para apagar la flecha de scroll) y, en navegadores sin
+   animation-timeline, --hero-travel en <html> (0 → 1 mientras el arco cruza la pantalla) para aplanarlo. */
 (function(){
   var sec = document.querySelector('.escenas'); if(!sec) return;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var raiz = document.documentElement, capas = [].slice.call(sec.querySelectorAll('.escenas__capa')), n = capas.length;
+  var raiz = document.documentElement, arco = document.querySelector('.hero-arco');
   var conTimeline = !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: view()'));
-  var e = 0, pedido = false, k = -1;
-  sec.classList.add('escenas--js');
+  var e = 0, viaje = 0, pedido = false;
   function lim(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
   function pintar(){
     pedido = false;
     sec.style.setProperty('--escena', e.toFixed(4));
-    var kk = Math.floor(e); if(kk !== k){ k = kk; capas.forEach(function(c, j){ c.classList.toggle('viva', j === k || j === k + 1); }); }
+    if(!conTimeline && arco) raiz.style.setProperty('--hero-travel', viaje.toFixed(4));
   }
   function medir(){
-    var H = innerHeight, top = sec.getBoundingClientRect().top, paso = Math.max(1, (sec.offsetHeight - H) / Math.max(1, n - 1));
-    e = Math.max(0, Math.min(n - 1, -top / paso));
-    if(!conTimeline) raiz.style.setProperty('--hero-travel', lim((-top - (sec.offsetHeight - H)) / H + 1).toFixed(4));
+    var H = innerHeight;
+    e = lim(-sec.getBoundingClientRect().top / H);
+    if(!conTimeline && arco){ var r = arco.getBoundingClientRect(); viaje = lim((H - r.top) / (H + r.height)); }
     if(!pedido){ pedido = true; requestAnimationFrame(pintar); }
   }
   addEventListener('scroll', medir, { passive: true }); addEventListener('resize', medir); medir();

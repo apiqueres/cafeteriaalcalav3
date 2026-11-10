@@ -5,9 +5,11 @@
    cinco cartas no los indican, así que van sin alérgenos y la web avisa de que se consulten en el local (sinAlg).
    ETIQUETAS: «nuevo» donde el PDF lo marca, «vegano» en la carta vegana, «sin gluten» en la selección de la página
    «Carta sin gluten» y «picante» donde el nombre o la descripción lo dicen.
-   FOTOS de plato (foto:'…' → media/carta/platos/….webp): las que vienen dentro de los PDF, recortadas; fotoLlena
-   marca las que no son un recorte y llenan el marco. fotoMesa marca las fotos reales del cliente llevadas a una mesa
-   oscura con el fondo de azulejos azules (cuadradas, 1400 px; originales en imagenes/platos-mesa).
+   FOTOS de plato (foto:'…' → media/carta/platos/….webp): todas llevan fotoMesa, la foto del plato sobre una mesa
+   oscura con el fondo de azulejos azules (cuadradas, 1400 px; originales en imagenes/platos-mesa). Unas salen de las
+   fotos reales del cliente y otras de los recortes que venían en los PDF. Sin fotoMesa la foto se trata como un
+   recorte sobre fondo claro, y con fotoLlena como una foto que llena el marco. Las fotos de sección
+   (media/carta/<sección>.webp) son recortes 4:3 de esas mismas fotos, salvo las de bebidas.
    Precio: p es el principal (e dice de qué: botella, doble…), p2 el segundo (e2 dice de qué: copa, media ración…).
    CARTAS dice qué cartas hay; cada categoría de CARTA dice a cuál pertenece (carta:'…').
    Cuando exista el panel con servidor, este fichero lo generará el servidor desde la base de datos. */
@@ -54,7 +56,7 @@ window.CARTA = [
   { id:'bocadillos', carta:'general', n:'Bocadillos', foto:'bocadillos', d:'Suplementos: patatas fritas 1,25 €, verduras a la plancha 2,50 €, láminas de boniato 1,60 €.', platos:[
     { n:'Jamón bellota ibérico', p:'6,50', d:'Bocadillo frío.', a:['gluten'] },
     { n:'Queso manchego', p:'5,50', d:'Bocadillo frío.', a:['gluten','huevos','lacteos'] },
-    { n:'Chivito', p:'7,00', d:'Lomo, queso, cebolla frita y bacon. Bocadillo caliente.', a:['gluten','huevos','soja','lacteos'], foto:'chivito' },
+    { n:'Chivito', p:'7,00', d:'Lomo, queso, cebolla frita y bacon. Bocadillo caliente.', a:['gluten','huevos','soja','lacteos'], foto:'chivito', fotoMesa:true },
     { n:'Atún', p:'5,50', d:'Bocadillo frío.', a:['gluten','pescado'] },
     { n:'Sobrasada', p:'5,50', d:'Bocadillo frío.', a:['gluten','soja','lacteos','sulfitos'] },
     { n:'Atún especial', p:'6,00', d:'Atún, anchoas, aceitunas y tomate. Bocadillo frío.', a:['gluten','pescado'] },
@@ -67,8 +69,8 @@ window.CARTA = [
     { n:'Calamares', p:'6,75', d:'Bocadillo caliente.', a:['gluten','huevos','pescado','lacteos'] }
   ]},
   { id:'sandwiches', carta:'general', n:'Sándwiches', foto:'sandwiches', d:'Suplementos: patatas fritas 1,25 €, verduras a la plancha 2,50 €, láminas de boniato 1,60 €.', platos:[
-    { n:'Alcalá', p:'13,40', d:'Tres pisos de pechuga de pollo con bacon crujiente, lechuga, tomate y huevo. El precio incluye la ración de patatas.', a:['gluten','huevos','soja','lacteos'], foto:'sandwich-alcala' },
-    { n:'Primavera', p:'12,80', d:'Frío. Jamón York, queso, lechuga, tomate, pollo y salsa César. El precio incluye la ración de patatas.', a:['gluten','huevos','pescado','cacahuetes','soja','lacteos','mostaza','sesamo'], foto:'sandwich-primavera' },
+    { n:'Alcalá', p:'13,40', d:'Tres pisos de pechuga de pollo con bacon crujiente, lechuga, tomate y huevo. El precio incluye la ración de patatas.', a:['gluten','huevos','soja','lacteos'], foto:'sandwich-alcala', fotoMesa:true },
+    { n:'Primavera', p:'12,80', d:'Frío. Jamón York, queso, lechuga, tomate, pollo y salsa César. El precio incluye la ración de patatas.', a:['gluten','huevos','pescado','cacahuetes','soja','lacteos','mostaza','sesamo'], foto:'sandwich-primavera', fotoMesa:true },
     { n:'Mixto', p:'4,80', d:'Sándwich de jamón York y queso.', a:['gluten','soja','lacteos'] },
     { n:'Jamón serrano y queso', p:'5,20', d:'Sándwich de jamón serrano y queso.', a:['gluten','soja','lacteos'] },
     { n:'Mixto con huevo frito', p:'6,00', d:'Sándwich de jamón York, queso y huevo frito.', a:['gluten','huevos','soja'] },
@@ -76,8 +78,8 @@ window.CARTA = [
     { n:'Vegetal', p:'8,00', d:'Sándwich de lechuga, tomate, atún, mahonesa, huevo duro y espárrago. Incluye ración de patatas.', a:['gluten','huevos','pescado','soja','lacteos','sesamo'] }
   ]},
   { id:'patatas', carta:'general', n:'Especialidades con patatas', foto:'patatas', d:'Para picar entre varios.', platos:[
-    { n:'Huevos rotos', p:'10,50', d:'Huevos rotos con jamón, chorizo y patatas.', a:['gluten','huevos','soja'], foto:'huevos-rotos' },
-    { n:'Torreta semipicante de patatas', p:'9,60', d:'Torre de patatas caseras.', a:['gluten','huevos','soja','sulfitos'], t:['picante'], foto:'torreta-patatas' },
+    { n:'Huevos rotos', p:'10,50', d:'Huevos rotos con jamón, chorizo y patatas.', a:['gluten','huevos','soja'], foto:'huevos-rotos', fotoMesa:true },
+    { n:'Torreta semipicante de patatas', p:'9,60', d:'Torre de patatas caseras.', a:['gluten','huevos','soja','sulfitos'], t:['picante'], foto:'torreta-patatas', fotoMesa:true },
     { n:'Patatas Alcalá', p:'10,50', d:'Patatas fritas con beicon y queso fundido.', a:['gluten','huevos','soja','lacteos'] },
     { n:'Patatas dipear', p:'9,50', d:'Patatas con variedad de salsas.', a:['gluten','huevos','soja','sulfitos'], foto:'patatas-dipear', fotoMesa:true },
     { n:'Láminas de boniato', p:'7,95', d:'Láminas de boniato para picotear.', a:['gluten','huevos','soja','sulfitos'], foto:'laminas-boniato', fotoMesa:true },
@@ -88,14 +90,14 @@ window.CARTA = [
     { n:'Menú infantil', p:'11,40', d:'Primero a elegir entre spaghetti boloñesa o hamburguesa con patatas. Postre: helado de vainilla con lacasitos. Los alérgenos son la suma de los tres platos.', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara','mostaza','sesamo','sulfitos'] }
   ]},
   { id:'pastas', carta:'general', n:'Pastas', foto:'pastas', d:'Suplemento de queso en los spaghetti, +1 €.', platos:[
-    { n:'Lasaña boloñesa', p:'8,80', a:['gluten','huevos','lacteos'], foto:'lasana-bolonesa' },
+    { n:'Lasaña boloñesa', p:'8,80', a:['gluten','huevos','lacteos'], foto:'lasana-bolonesa', fotoMesa:true },
     { n:'Spaghetti boloñesa', p:'9,00', a:['gluten','huevos','mostaza'], foto:'spaghetti-bolonesa', fotoMesa:true },
     { n:'Moussaka', p:'9,40', d:'Lasaña griega de berenjenas con mezcla de carnes de ternera, cerdo y ave, cebolla, tomate y un toque de salsa.', a:['gluten','soja','lacteos'] },
     { n:'Spaghetti carbonara', p:'8,70', a:['gluten','huevos','mostaza'] }
   ]},
   { id:'carnes', carta:'general', n:'Carnes', foto:'carnes', d:'Suplementos: patatas fritas 1,25 €, verduras a la plancha 2,50 €, láminas de boniato 1,60 €.', platos:[
     { n:'Croqueta de jamón ibérico', p:'2,00', d:'1 unidad.', a:['gluten','huevos','soja','lacteos'] },
-    { n:'Croquetas', p:'8,00', d:'De setas y jamón serrano. 6 unidades.', a:['gluten','huevos','soja','lacteos'], foto:'croquetas' },
+    { n:'Croquetas', p:'8,00', d:'De setas y jamón serrano. 6 unidades.', a:['gluten','huevos','soja','lacteos'], foto:'croquetas', fotoMesa:true },
     { n:'Codillo', p:'16,30', d:'Acompañado de patatas fritas.', a:[], t:['singluten'] },
     { n:'Brochetas de pollo', p:'13,30', d:'Acompañadas de patata hervida.', a:[], t:['singluten'] },
     { n:'Costillas barbacoa', p:'18,40', p2:'14,80', e2:'Media ración', d:'Acompañadas de patata hervida. Ración completa.', a:[] },
@@ -110,18 +112,18 @@ window.CARTA = [
   ]},
   { id:'pescados', carta:'general', n:'Pescados', foto:'pescados', d:'', platos:[
     { n:'Calamar entero', p:'13,00', a:['gluten','huevos','pescado'] },
-    { n:'Pulpo a la gallega', p:'21,00', a:['pescado'], foto:'pulpo-gallega', fotoLlena:true },
+    { n:'Pulpo a la gallega', p:'21,00', a:['pescado'], foto:'pulpo-gallega', fotoMesa:true },
     { n:'Tostada de ahumados', p:'7,50', a:['gluten','huevos','pescado'] },
     { n:'Bacalao con tomate', p:'15,40', d:'Acompañado de patata hervida.', a:['pescado'], t:['singluten'], foto:'bacalao', fotoMesa:true },
     { n:'Sepia', p:'13,75', a:['pescado'] },
     { n:'Emperador', p:'14,95', a:['gluten','pescado'] },
-    { n:'Calamares a la romana', p:'11,00', a:['gluten','huevos','pescado'], foto:'calamares-romana' },
+    { n:'Calamares a la romana', p:'11,00', a:['gluten','huevos','pescado'], foto:'calamares-romana', fotoMesa:true },
     { n:'Chipirones', p:'11,90', a:['gluten','huevos','pescado'] }
   ]},
   { id:'postres', carta:'general', n:'Postres', foto:'postres', d:'', platos:[
-    { n:'Flan casero', p:'4,20', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'], foto:'flan' },
+    { n:'Flan casero', p:'4,20', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'], foto:'flan', fotoMesa:true },
     { n:'Coulant de chocolate', p:'4,80', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'] },
-    { n:'Torrija casera', p:'5,30', d:'Con helado de leche merengada.', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'], foto:'torrija' },
+    { n:'Torrija casera', p:'5,30', d:'Con helado de leche merengada.', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'], foto:'torrija', fotoMesa:true },
     { n:'Bowl Alcalá', p:'7,10', d:'Yogur griego con frutas de temporada y muesli.', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'] },
     { n:'Helado de leche merengada', p:'4,90', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'] },
     { n:'Tarta Tatín', p:'5,30', d:'Tarta de manzana caliente con helado de vainilla.', a:['gluten','huevos','cacahuetes','soja','lacteos','cascara'] },
@@ -133,12 +135,12 @@ window.CARTA = [
     { n:'Láminas de boniato', p:'7,95', d:'Boniatos dulces cortados en finas láminas, dorados y con un ligero toque de sal.', a:[], t:['vegano'], foto:'laminas-boniato', fotoMesa:true },
     { n:'Peruvian Salad', p:'11,50', d:'Nuestra ensalada más fresca: quinoa cocida, pimiento verde y rojo, garbanzos, maíz dulce, nueces y pasas, aromatizada con aceite de oliva y nuestra vinagreta especial. Los ingredientes pueden variar según la temporada.', a:['cacahuetes','soja','cascara','mostaza'], t:['vegano'], foto:'peruvian-salad', fotoMesa:true },
     { n:'Season Green Salad', p:'11,95', d:'Ensalada de hortalizas y verduras de temporada, frescas y preparadas al momento, acompañadas de vuna (atún vegano).', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'] },
-    { n:'Nuggets veganos', p:'7,25', d:'Nuestra versión vegana de un clásico: crujientes y con todo el sabor, a partir de proteínas vegetales de soja y trigo.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'nuggets-veganos' },
+    { n:'Nuggets veganos', p:'7,25', d:'Nuestra versión vegana de un clásico: crujientes y con todo el sabor, a partir de proteínas vegetales de soja y trigo.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'nuggets-veganos', fotoMesa:true },
     { n:'Hamburguesa Penélope', p:'9,50', d:'Nuestra hamburguesa vegana, servida con pan especial de semillas, tomate, cebolla y pepinillos, con un toque de mostaza. Acompañada de nuestra patata asada.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'hamburguesa-penelope', fotoMesa:true },
     { n:'Sándwich Pitágoras', p:'9,85', d:'Pan con semillas, tofu, brotes verdes, espinacas, láminas de tomate y aguacate. Puedes acompañarlo con nuestras patatas.', a:['gluten','cascara','sesamo'], t:['vegano'], foto:'pitagoras', fotoMesa:true },
-    { n:'Falafel', p:'7,85', d:'Albóndigas especiadas de garbanzos y remolacha, para comer solas o como acompañantes.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'falafel' },
-    { n:'Salteado vegano de pollo', p:'10,50', d:'Salteado con todo el sabor del pollo y nuestras verduras frescas, pero totalmente vegano.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'salteado-vegano' },
-    { n:'Bocadillo de pollo vegano', p:'7,10', d:'Pollo empanado crujiente, lechuga, tomate, pan y mayonesa, pero totalmente vegano.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'bocadillo-pollo-vegano' },
+    { n:'Falafel', p:'7,85', d:'Albóndigas especiadas de garbanzos y remolacha, para comer solas o como acompañantes.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'falafel', fotoMesa:true },
+    { n:'Salteado vegano de pollo', p:'10,50', d:'Salteado con todo el sabor del pollo y nuestras verduras frescas, pero totalmente vegano.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'salteado-vegano', fotoMesa:true },
+    { n:'Bocadillo de pollo vegano', p:'7,10', d:'Pollo empanado crujiente, lechuga, tomate, pan y mayonesa, pero totalmente vegano.', a:['gluten','huevos','soja','apio','mostaza','sesamo'], t:['vegano','nuevo'], foto:'bocadillo-pollo-vegano', fotoMesa:true },
     { n:'Batido Natalie Portman', p:'7,30', d:'Green Detox Smoothie: manzana, pepino, apio, espinacas, jengibre y zumo de naranja.', a:['apio'], t:['vegano'] },
     { n:'Season Fruits Salad', p:'7,90', d:'Ensalada de frutas de temporada, frescas y preparadas al momento, acompañada de zumo natural.', a:[], t:['vegano'], foto:'bol-frutas', fotoMesa:true }
   ]},
@@ -149,8 +151,8 @@ window.CARTA = [
     { n:'Almuerzo con 3 variantes', p:'10,00', d:'Bocadillo con 3 variantes, 1 bebida y café.', a:[] }
   ]},
   { id:'especialidades', carta:'desayunos', n:'Desayunos', foto:'', d:'Suplemento de pan sin gluten, +1,20 €.', platos:[
-    { n:'Tostada rústica', p:'4,90', d:'Pan de pueblo con tomate valenciano, jamón serrano ibérico, albahaca y aceite virgen extra.', a:[], foto:'tostada-rustica' },
-    { n:'Tostada Merrick', p:'5,90', d:'Recomendación desde Kentucky: pan de semilla, aguacate, huevo revuelto y bacon horneado a 140 grados con semillas de cereales y paprika.', a:[], t:['reco'], foto:'tostada-merrick' },
+    { n:'Tostada rústica', p:'4,90', d:'Pan de pueblo con tomate valenciano, jamón serrano ibérico, albahaca y aceite virgen extra.', a:[], foto:'tostada-rustica', fotoMesa:true },
+    { n:'Tostada Merrick', p:'5,90', d:'Recomendación desde Kentucky: pan de semilla, aguacate, huevo revuelto y bacon horneado a 140 grados con semillas de cereales y paprika.', a:[], t:['reco'], foto:'tostada-merrick', fotoMesa:true },
     { n:'Açaí Bowl', p:'8,50', d:'Açaí, arándanos, coco, fresas, plátano, granola y salsa de pistacho. Las frutas pueden variar según temporada.', a:[], foto:'acai-bowl', fotoMesa:true },
     { n:'Bowl Alcalá', p:'8,00', d:'Yogur griego con fruta de temporada y muesli.', a:[] },
     { n:'Bol de frutas de temporada', p:'7,90', d:'Variedad de frutas de temporada cortadas al momento.', a:[], foto:'bol-frutas', fotoMesa:true },
@@ -166,7 +168,7 @@ window.CARTA = [
     { n:'Croissant relleno especial', p:'5,20', d:'Croissant caliente relleno de jamón serrano y queso.', a:[] },
     { n:'Sándwich mixto', p:'4,90', d:'Sándwich de jamón York y queso.', a:[] },
     { n:'Sándwich jamón serrano y queso', p:'5,40', d:'Sándwich de jamón serrano y queso.', a:[] },
-    { n:'Batido de proteína AMIX', p:'5,50', d:'Batido AMIX alto en proteína. Sabores: chocolate, vainilla, tarta de queso y fresa. Elige entre leche de soja, almendra, entera, sin lactosa o agua. Suplemento de creatina, +1 €.', a:[], foto:'batido-amix' }
+    { n:'Batido de proteína AMIX', p:'5,50', d:'Batido AMIX alto en proteína. Sabores: chocolate, vainilla, tarta de queso y fresa. Elige entre leche de soja, almendra, entera, sin lactosa o agua. Suplemento de creatina, +1 €.', a:[], foto:'batido-amix', fotoMesa:true }
   ]},
   { id:'tostadas', carta:'desayunos', n:'Tostadas', foto:'', d:'Entera o media.', platos:[
     { n:'Tostada pan normal', p:'1,45', p2:'1,40', e2:'1/2 tostada', a:[] },

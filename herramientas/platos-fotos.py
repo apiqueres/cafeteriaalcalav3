@@ -2,7 +2,8 @@
 Uso: python herramientas/platos-fotos.py <carpeta con los PNG extraídos> <salida = site/media/carta/platos>
 Los PNG salen de las imágenes incrustadas en los PDF (pypdf: page.images), con su máscara ya aplicada. Aquí se
 recortan al contenido, se dejan a 1100 px de lado mayor como mucho y se guardan en WebP con transparencia.
-Las que vienen sobre fondo blanco (croquetas) pasan el blanco a transparente."""
+Las que vienen sobre fondo blanco (croquetas) pasan el blanco a transparente.
+Ya no pisa una foto que exista en la salida (ahora son las fotos sobre la mesa con azulejos), salvo con --forzar."""
 import sys, os
 from PIL import Image, ImageChops
 ORIGEN = {
@@ -26,6 +27,7 @@ def blanco_a_alfa(im):
     return out
 def main(src, dst):
     for nombre, base in ORIGEN.items():
+        if os.path.exists(os.path.join(dst, nombre + '.webp')) and '--forzar' not in sys.argv: continue
         im = Image.open(os.path.join(src, base + '.png'))
         if im.mode != 'RGBA': im = blanco_a_alfa(im)
         a = im.split()[3]
